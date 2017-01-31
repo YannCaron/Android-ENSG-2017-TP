@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/prof/Android-ENSG-2016/tp/Spatialite-Database-Driver/spatialite-db-driver/src/main/assets"/></dataSet><dataSet config="release"><source path="/home/prof/Android-ENSG-2016/tp/Spatialite-Database-Driver/spatialite-db-driver/src/release/assets"/></dataSet></merger>
