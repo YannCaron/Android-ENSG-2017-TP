@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import dbAcces.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+
 
 public class LoginActivity extends AppCompatActivity implements Constants {
 
@@ -23,6 +27,9 @@ public class LoginActivity extends AppCompatActivity implements Constants {
 
     // les préférences
     private SharedPreferences preferences;
+
+    // db
+    private SpatialiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +84,14 @@ public class LoginActivity extends AppCompatActivity implements Constants {
     }
 
     private void initDatabase() {
-
-
+        try {
+            SpatialiteOpenHelper helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
+        } catch (jsqlite.Exception | IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this,
+                    "Cannot initialize database !", Toast.LENGTH_LONG).show();
+            System.exit(0);
+        }
     }
 }
