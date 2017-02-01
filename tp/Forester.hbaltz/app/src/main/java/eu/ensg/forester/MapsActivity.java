@@ -279,6 +279,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private class saveListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            mMap.clear();
             popToast("Save", true);
             activateRecording(false);
         }
@@ -287,6 +288,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private class AbortListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            mMap.clear();
             popToast("Abort", true);
             activateRecording(false);
         }
