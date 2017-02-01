@@ -3,8 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../...iml" filepath="$PROJECT_DIR$/../...iml" />
-      <module fileurl="file://$USER_HOME$/Android-ENSG-2017-tp.iml" filepath="$USER_HOME$/Android-ENSG-2017-tp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Forester.iml" filepath="$PROJECT_DIR$/Forester.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Forester.tp1.iml" filepath="$PROJECT_DIR$/Forester.tp1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/../eu.ensg.commons/eu.ensg.commons.iml" filepath="$PROJECT_DIR$/../eu.ensg.commons/eu.ensg.commons.iml" />
       <module fileurl="file://$PROJECT_DIR$/../eu.ensg.spatialite/eu.ensg.spatialite.iml" filepath="$PROJECT_DIR$/../eu.ensg.spatialite/eu.ensg.spatialite.iml" />
