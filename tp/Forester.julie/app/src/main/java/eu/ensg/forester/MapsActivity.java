@@ -26,9 +26,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
+import eu.ensg.spatialite.geom.XY;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
 
@@ -42,6 +44,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Polygon sector = new Polygon();;
     private boolean isRecording = false;
+    private com.google.android.gms.maps.model.Polygon currentDrawPolygon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,9 +140,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         editPosition.setText(currentPosition.toString());
         Log.i(this.getClass().getName(), "Update location");
 
-        if (isRecording == true) {
+        if (isRecording) {
             sector.addCoordinate(currentPosition.getCoordinate());
+
+            PolygonOptions poly = new PolygonOptions();
+            for (XY elmt : sector.getCoordinates().getCoords()) {
+                poly.add(new LatLng(elmt.getX(), elmt.getY()));
+            }
+
+            if (currentDrawPolygon != null)
+                currentDrawPolygon.remove();
+            currentDrawPolygon = mMap.addPolygon(poly);
+            currentDrawPolygon.setVisible(true);
+
+            Log.i(this.getClass().getName(), "La");
+
         }
+
+
+
     }
 
     @Override
@@ -192,18 +211,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         sectorMenu.setVisibility(View.VISIBLE);
         sector = new Polygon();
         isRecording = true;
+
     }
 
     private void save_onClick(View view) {
         isRecording = false;
         sectorMenu.setVisibility(view.GONE);
-        Log.i(this.getClass().getName(), sector.toString());
+        //Log.i(this.getClass().getName(), sector.toString());
     }
 
     private void abort_onClick(View view) {
         isRecording = false;
         sectorMenu.setVisibility(view.GONE);
-        Log.i(this.getClass().getName(), sector.toString());
+        //Log.i(this.getClass().getName(), sector.toString());
     }
 
 }
