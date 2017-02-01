@@ -153,7 +153,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             currentDrawPolygon = mMap.addPolygon(poly);
             currentDrawPolygon.setVisible(true);
 
-            Log.i(this.getClass().getName(), "La");
+            Log.i(this.getClass().getName(), currentDrawPolygon.toString());
 
         }
 
