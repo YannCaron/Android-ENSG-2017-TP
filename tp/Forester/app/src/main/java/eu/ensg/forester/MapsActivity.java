@@ -70,7 +70,7 @@ public class MapsActivity extends AppCompatActivity implements Constants, OnMapR
 
     // attributs
     private int foresterID;
-    private Point currentPosition = new Point(6.2341579, 46.193253);
+    private Point currentPosition;
     private boolean isRecording = false;
     private Polygon currentDistrict;
     private com.google.android.gms.maps.model.Polygon currentPolygon;
@@ -120,6 +120,9 @@ public class MapsActivity extends AppCompatActivity implements Constants, OnMapR
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        Location location = GPSUtils.getLastLocation(this);
+        if (location != null) currentPosition = new Point(location.getLongitude(), location.getLatitude());
 
         // Zoom à la position courante
         moveTo(currentPosition);
