@@ -3,6 +3,7 @@ package eu.ensg.forester;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import dbAcces.ForesterSpatialiteOpenHelper;
 import eu.ensg.spatialite.SpatialiteDatabase;
 import eu.ensg.spatialite.SpatialiteOpenHelper;
+import jsqlite.Exception;
+import jsqlite.Stmt;
 
 
 public class LoginActivity extends AppCompatActivity implements Constants {
@@ -74,8 +77,25 @@ public class LoginActivity extends AppCompatActivity implements Constants {
     }
 
     private void login_onClick(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        String serialNB = editSerial.getText().toString();
+
+        // https://www.gaia-gis.it/fossil/libspatialite/wiki?name=spatialite-android-tutorial
+
+        try {
+            Stmt stmt = database.prepare("SELECT * FROM Forester WHERE Serial = " + DatabaseUtils.sqlEscapeString(serialNB));
+
+            if(stmt.step()){
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
+            }else {
+                popToast("Pas d'utilisateur ! Veuillez en créer un !", true);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void create_onClick(View view) {
@@ -94,4 +114,25 @@ public class LoginActivity extends AppCompatActivity implements Constants {
             System.exit(0);
         }
     }
+
+
+    /**
+     * Functions which displays a message on the device's screen, if show = true
+     *
+     * @param message: String the  displayed message
+     * @param show: Boolean true=> display
+     */
+    private void popToast(final String message, final boolean show) {
+        // Simple helper method for showing toast on the main thread
+        if (!show)
+            return;
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
