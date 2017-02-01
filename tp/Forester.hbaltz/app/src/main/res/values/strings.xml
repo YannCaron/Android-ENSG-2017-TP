@@ -17,4 +17,7 @@
     <string name="addPt">Add point of interest</string>
     <string name="addSt">Add sector</string>
 
+    <string name="sv">Save</string>
+    <string name="abrt">Abort</string>
+
 </resources>

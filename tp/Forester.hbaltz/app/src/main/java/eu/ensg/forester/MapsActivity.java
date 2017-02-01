@@ -8,11 +8,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +28,23 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import eu.ensg.spatialite.geom.Point;
+import eu.ensg.spatialite.geom.Polygon;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
+    // Gestion de la position
     private Point pos;
     private TextView lblPosition;
+
+    // Gestion des polygones
+    private Polygon currentDistrict;
+    private boolean isRecording = false;
+
+    private Button btSave;
+    private Button btAbort;
+    private LinearLayout llRecording;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
@@ -65,6 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 popToast("Sector", true);
+                createSt();
                 return true;
             }
         });
@@ -149,8 +165,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * Manages the view
      */
     private void manageViews(){
-
         lblPosition = (TextView) findViewById(R.id.lblPosition);
+
+        llRecording = (LinearLayout) findViewById(R.id.recordingMenu);
+        llRecording.setVisibility(View.GONE);
+
+        btSave = (Button) findViewById(R.id.btSave);
+        btAbort = (Button) findViewById(R.id.btAbort);
+
+        btSave.setText(getString(R.string.sv));
+        btAbort.setText(getString(R.string.abrt));
 
     }
 
@@ -167,6 +191,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //mMap.addMarker(new MarkerOptions().position(pos.toLatLng()).title("Je suis ici").snippet("Ici c'est Moi !"));
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+        if(isRecording){
+            currentDistrict.addCoordinate((float)pos.getCoordinate().getX(),(float)pos.getCoordinate().getY());
+        }
 
         popToast("lat : " + pos.getCoordinate().getY() + ", long : " + pos.getCoordinate().getX(), true);
         Log.d("loc", "lat : " + pos.getCoordinate().getY() + ", long : " + pos.getCoordinate().getX());
@@ -196,6 +224,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Creates a poi on the map
+     */
     private void createPt(){
         mMap.setOnMapClickListener(new MapClickListenerPt());
     }
@@ -205,5 +236,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void onMapClick(LatLng latLng) {
             mMap.addMarker(new MarkerOptions().position(latLng).title("Point of interest").snippet("POINT (" + latLng.latitude + ", " + latLng.longitude + " )"));
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void createSt(){
+        isRecording = true;
+        currentDistrict = new Polygon();
+        llRecording.setVisibility(View.VISIBLE);
     }
 }
