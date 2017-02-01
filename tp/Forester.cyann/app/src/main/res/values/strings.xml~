@@ -19,6 +19,6 @@
     <string name="title_database_tools">Database tools</string>
     <string name="title_browse_poi">Browser point of interest</string>
     <string name="title_browse_district">Browser district</string>
-    <string name="google_api_server_key">AIzaSyBS8CUk5RZY7xXl1QccZmkILBV2ogmspqc</string>
-    <string name="google_maps_key_home">AIzaSyBS8CUk5RZY7xXl1QccZmkILBV2ogmspqc</string>
+    <string name="google_api_server_key"></string>
+    <string name="google_maps_key_home"></string>
 </resources>
