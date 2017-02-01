@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item android:title="addPOI"
+            android:id="@+id/addPOI"
+            android:checkable="false" />
+        <item android:title="addSector"
+            android:id="@+id/addSector"
+            android:checkable="true" />
+    </group>
+    <group >
+        <item android:title="déconnexion"
+            android:id="@+id/logoff" />
+    </group>
+</menu>
