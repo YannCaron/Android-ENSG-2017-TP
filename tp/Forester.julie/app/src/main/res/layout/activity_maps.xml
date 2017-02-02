@@ -39,10 +39,10 @@
             android:layout_weight="1" />
 
         <Button
-            android:text="Abrot"
+            android:text="Abort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/button_abrot"
+            android:id="@+id/button_abort"
             android:layout_weight="1" />
     </LinearLayout>
 

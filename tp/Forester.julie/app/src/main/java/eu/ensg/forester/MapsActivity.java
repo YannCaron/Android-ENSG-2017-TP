@@ -1,6 +1,5 @@
 package eu.ensg.forester;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -8,7 +7,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -40,7 +38,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private TextView editPosition;
     private LinearLayout sectorMenu;
     private Button save;
-    private Button abrot;
+    private Button abort;
 
     private Polygon sector = new Polygon();;
     private boolean isRecording = false;
@@ -58,7 +56,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         editPosition = (TextView)findViewById(R.id.position);
         sectorMenu = (LinearLayout) findViewById(R.id.sector_menu);
         save = (Button)findViewById(R.id.button_save);
-        abrot = (Button)findViewById(R.id.button_abrot);
+        abort = (Button)findViewById(R.id.button_abort);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +65,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        abrot.setOnClickListener(new View.OnClickListener() {
+        abort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 abort_onClick(view);
