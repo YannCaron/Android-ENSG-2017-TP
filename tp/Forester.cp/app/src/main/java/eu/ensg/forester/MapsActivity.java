@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,13 +32,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.Random;
 
 import eu.ensg.forester.db.ForesterSpatialiteOpenHelper;
 import eu.ensg.spatialite.SpatialiteDatabase;
 import eu.ensg.spatialite.SpatialiteOpenHelper;
+import eu.ensg.spatialite.geom.BadGeometryException;
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.XY;
+import jsqlite.Exception;
+import jsqlite.Stmt;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static eu.ensg.forester.Constants.EXTRA_SERIAL;
+import static eu.ensg.forester.Constants.PREFERENCE_NAME;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -45,7 +53,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private float lat = -34, lng = 151;
     private eu.ensg.spatialite.geom.Point currentPosition;
     private SpatialiteDatabase database;
-
+    private String userid;
+    private SharedPreferences preferences;
+    Random rnd;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -61,8 +71,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //Menu fragment = (Menu) getFragmentManager().findFragmentById(R.menu.menumap);
 
+        preferences = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+        //Menu fragment = (Menu) getFragmentManager().findFragmentById(R.menu.menumap);
+        userid = getIntent().getStringExtra(EXTRA_SERIAL);
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -225,7 +237,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void onOptionAddPOISelected(MenuItem item) {
         if (currentPosition!= null) {
-            mMap.addMarker(new MarkerOptions().position(currentPosition.toLatLng()).title("POI").snippet(currentPosition.toString()));
+            //mMap.addMarker(new MarkerOptions().position(currentPosition.toLatLng()).title("POI").snippet(currentPosition.toString()));
             Toast.makeText(this, "POI avail", Toast.LENGTH_LONG).show();
             if (addPointToDatabase(currentPosition.toString())) Log.d("POI", "add ok");
 
@@ -257,22 +269,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean addPointToDatabase(String position) {
         Log.d("Addpoint", currentPosition.getCoordinate().toString());
         Log.d("Addpoint pos", position);
-/*
+
+        rnd= new Random();
+        String name= "A" + String.valueOf(rnd.nextInt(20));
+        try {
         String query= "INSERT INTO PointOfInterest "+
-                "(ForesterID, Name, position), VALUES("+
-                foresterId + ", "+
-                + DatabaseUtils.sqlEscapeString(currentPosition.getCoordinate().toString()) + ", ";
+                "(ForesterID, Name, Description, position) VALUES("+
+                userid + ", " + DatabaseUtils.sqlEscapeString(name) +","+DatabaseUtils.sqlEscapeString("toto")+","
+                + currentPosition.toSpatialiteQuery(4326) + "); ";
 
 
-        database.exec();*/
+
+        Log.d("Addpoint query", query);
+
+            database.exec(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } catch (BadGeometryException e) {
+            e.printStackTrace();
+        }
         return true;
-
-        /*
-        (FirstName,LastName, Serial) VALUES("
-                    + DatabaseUtils.sqlEscapeString(editFirstName.getText().toString()) + ", "
-                    + DatabaseUtils.sqlEscapeString(editLastName.getText().toString()) + ", "
-                    + DatabaseUtils.sqlEscapeString(editSerial.getText().toString()) + ");";
-         */
 /*
         "ID integer PRIMARY KEY AUTOINCREMENT,\n" +
                 "ForesterID integer NOT NULL,\n" +
@@ -285,4 +301,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
          */
     }
+
+    private void retrieveData() {
+        Stmt st= null;
+
+        try {
+            st = database.prepare("SELECT name, ST_AsText(position) FROM PointOfInterest");
+            while (st.step()) {
+                String name = st.column_string(0);
+                String pos= st.column_string(1);
+                Point point= Point.unMarshall(pos);
+
+                mMap.addMarker(new MarkerOptions().position(point.toLatLng()).title(name));
+            }
+
+        } catch (java.lang.Exception e) {}
+    }
+
 }

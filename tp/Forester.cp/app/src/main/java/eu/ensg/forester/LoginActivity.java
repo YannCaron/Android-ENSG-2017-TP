@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements Constants {
         if (isInDatabase("toto", "titi", editSerial.getText().toString())) {
 
             Intent intent = new Intent(this, MapsActivity.class);
+            intent.putExtra(EXTRA_SERIAL, editSerial.getText().toString());
             startActivity(intent);
         } else {
             Toast.makeText(this, "Nope!", Toast.LENGTH_LONG);
