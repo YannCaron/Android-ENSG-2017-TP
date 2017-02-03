@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':eu.ensg.commons', ':spatialite-db-driver', ':eu.ensg.spatialite'

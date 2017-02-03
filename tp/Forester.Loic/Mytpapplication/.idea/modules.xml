@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Mytpapplication.iml" filepath="$PROJECT_DIR$/Mytpapplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eu.ensg.commons/eu.ensg.commons.iml" filepath="$PROJECT_DIR$/eu.ensg.commons/eu.ensg.commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eu.ensg.spatialite/eu.ensg.spatialite.iml" filepath="$PROJECT_DIR$/eu.ensg.spatialite/eu.ensg.spatialite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spatialite-db-driver/spatialite-db-driver.iml" filepath="$PROJECT_DIR$/spatialite-db-driver/spatialite-db-driver.iml" />
     </modules>
   </component>
 </project>

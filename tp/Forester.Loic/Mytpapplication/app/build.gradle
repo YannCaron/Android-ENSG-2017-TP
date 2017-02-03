@@ -3,6 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    sourceSets {
+        main {
+            jniLibs.srcDir new File(buildDir, 'native-libs')
+        }
+    }
     defaultConfig {
         applicationId "eu.ensg.loic.mytpapplication"
         minSdkVersion 23
@@ -24,8 +29,29 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile project(':eu.ensg.commons')
+    compile project(':eu.ensg.spatialite')
+    compile project(':spatialite-db-driver')
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.android.support:design:25.1.1'
     compile 'com.google.android.gms:play-services:10.0.1'
     testCompile 'junit:junit:4.12'
 }
+
+
+task copyNativeLibs(type: Copy) {
+    from(new File(project(
+            ':spatialite-db-driver').projectDir,
+            'src/main/java/jniLibs')) {
+        include 'armeabi/libjsqlite.so'
+        include 'armeabi-v7a/libjsqlite.so'
+        include 'x86/libjsqlite.so' // for emulator x86
+    }
+    into new File(buildDir, 'native-libs')
+}
+
+// Whenever the code is compiled, also copy the native libs to the build folder
+tasks.withType(JavaCompile) { compileTask -> compileTask.dependsOn copyNativeLibs }
+
+// On "gradle clean" also reverse the copying of the native libraries
+clean.dependsOn 'cleanCopyNativeLibs'

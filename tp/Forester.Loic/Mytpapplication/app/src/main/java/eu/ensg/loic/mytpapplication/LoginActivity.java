@@ -3,10 +3,14 @@ package eu.ensg.loic.mytpapplication;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.DatabaseUtils;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -30,21 +34,32 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import eu.ensg.loic.mytpapplication.data.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+import jsqlite.Exception;
+import jsqlite.Stmt;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, Constants {
 
     /**
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+
+
+    private SpatialiteDatabase database;/*> database */
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -63,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private boolean fuckOff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +112,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
 
         loadDefaultData();
+
+        initDatabase();
     }
 
     private void loadDefaultData(){
@@ -300,6 +318,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     /**
+     * Get the current activity
+     */
+    public Context getActivity() {
+        return this;
+    }
+
+    /**
+     * Display a toast with the content the string choice value.
+     * @param choice : string to display
+     */
+    private void displayToast(String choice){
+        Toast toast = Toast.makeText(getActivity(), choice, 3);
+        toast.show();
+    }
+
+
+    /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
@@ -313,41 +348,130 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPassword = password;
         }
 
+        boolean userExist(){
+            Log.d("database", "request asynchrone");
+            try {
+                Stmt stmt = database.prepare("SELECT COUNT(Login) FROM Forester where (Login = " + DatabaseUtils.sqlEscapeString(mEmail) + ")");
+                stmt.step();
+                // Return 1 if user exist; 0 otherwise
+                int UserExist = stmt.column_int(0);
+                boolean success = (UserExist == 1); // success is true if userExist == 1
+
+                Log.d("database", "User exists : "+String.valueOf(success));
+                return success;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        void addUser(){
+            Log.d("database", "request asynchrone");
+            try {
+                Stmt stmt = database.prepare("" +
+                        "INSERT INTO Forester (Login, Password)\n" +
+                        " VALUES\n" +
+                        " ("+ DatabaseUtils.sqlEscapeString(mEmail) + ", " +DatabaseUtils.sqlEscapeString(mPassword)+")");
+                stmt.step();
+                Log.d("database", "user added");
+                displayToast("user added");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        int getForesterID(){
+            Log.d("database", "request asynchrone");
+            try {
+                Stmt stmt = database.prepare("SELECT ID FROM Forester where (Login = " + DatabaseUtils.sqlEscapeString(mEmail) + ")");
+                stmt.step();
+                // Return 1 if user exist; 0 otherwise
+                int UserID = stmt.column_int(0);
+
+                return UserID;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return -1;
+
+        }
+
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+            Log.d("database", "request asynchrone");
             try {
                 // Simulate network access.
                 Thread.sleep(2000);
+                Stmt stmt = database.prepare("SELECT COUNT(Login) FROM Forester where (Login = " + DatabaseUtils.sqlEscapeString(mEmail) + ") and (Password = " + DatabaseUtils.sqlEscapeString(mPassword)+")");
+                stmt.step();
+                // Return 1 if user exist and match password; 0 otherwise
+                int UserExist = stmt.column_int(0);
+                boolean success = (UserExist == 1); // success is true if userExist == 1
+
+                Log.d("database", "User matched : "+String.valueOf(success));
+                return success;
+
+
+
+
             } catch (InterruptedException e) {
                 return false;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
 
             // TODO: register the new account here.
-            return true;
+            return false;
         }
+
+
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
 
+            Log.d("database", String.valueOf(success));
+
             if (success) {
                 Intent intentApp = new Intent(LoginActivity.this, MapsActivity.class);
+                int foresterID = getForesterID();
+                intentApp.putExtra(EXTRA_FORESTER_ID, foresterID);
                 LoginActivity.this.startActivity(intentApp);
                 Log.i("Content "," MapsActivity layout activated");
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                if (userExist()){
+
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                } else {
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setTitle("Confirmation")
+                            .setMessage(
+                                    "L'utilisateur ne s'est jamais connecté. Voulez-vous l'ajouter dans la base de données? \n \n "
+                            )
+                            .setPositiveButton("Oui je le veux", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Log.d("database", "User a ajouter !");
+                                    addUser();
+                                }
+                            })
+                            .setNegativeButton("Non ça ira", null)
+                            .show();
+                }
+
             }
         }
 
@@ -356,6 +480,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+
+
+
+    private void initDatabase() {
+
+        try {
+            SpatialiteOpenHelper helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
+            Log.d("Database", "Database initialized");
+        } catch (jsqlite.Exception | IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Cannot initialize database !", Toast.LENGTH_LONG).show();
+            Log.d("Database", "Database Failed");
+        }
+
     }
 }
 

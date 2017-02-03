@@ -3,6 +3,7 @@ package eu.ensg.loic.mytpapplication;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
@@ -27,10 +28,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.io.IOException;
+
+import eu.ensg.loic.mytpapplication.data.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+import eu.ensg.spatialite.geom.BadGeometryException;
+import eu.ensg.spatialite.geom.XY;
+
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static eu.ensg.loic.mytpapplication.R.id.map;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements Constants, OnMapReadyCallback {
 
     private static final int REQUEST_ACCESS_COARSE_LOCATION = 0; /*> Id to identity ACCESS_COARSE_LOCATION permission request */
 
@@ -45,6 +54,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean mPolygonSetup;
     private android.location.LocationListener mLocationListened;
 
+    private SpatialiteDatabase database;/*> database */
+    private int foresterID;
 
     /**
      * Generate the view and its default configuration
@@ -71,6 +82,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void defaultSettings() {
         mSpy = false;
         mPolygonSetup = false;
+        foresterID = getIntent().getIntExtra(EXTRA_FORESTER_ID, -1);
+
+        initDatabase();
     }
 
     /**
@@ -176,39 +190,43 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     /**
      * Add a marker to the map if accuracy is less than a specific value. Or ask confirmation to the user.
      */
-    private void addPoi(double minAccuracy){
-        if (mLocation.getAccuracy() < minAccuracy){
-            LatLng marker = new LatLng( mLocation.getLatitude(), mLocation.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(marker)
-                    .title(
-                            "Accuracy : "+String.valueOf(mLocation.getAccuracy())+
-                                    "\nTime : "+ String.valueOf(mLocation.getTime())
-                    ));
-            displayToast(getString(R.string.addPOI));
+    private void addPoi(double minAccuracy) {
+        if (mLocation != null) {
+            if (mLocation.getAccuracy() < minAccuracy) {
+                LatLng marker = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(marker)
+                        .title(
+                                "Accuracy : " + String.valueOf(mLocation.getAccuracy()) +
+                                        "\nTime : " + String.valueOf(mLocation.getTime())
+                        ));
+                displayToast(getString(R.string.addPOI));
+            } else {
+                new AlertDialog.Builder(this)
+                        .setTitle("Confirmation")
+                        .setMessage(
+                                "La précision de votre position est supérieure à 5 mètres. \n \n " +
+                                        "Position actuelle : " + String.valueOf(mLocation.getAccuracy()) + " m. \n \n " +
+                                        "Ajouter quand même ?"
+                        )
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                LatLng marker = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+                                mMap.addMarker(new MarkerOptions().position(marker)
+                                        .title(
+                                                "Accuracy : " + String.valueOf(mLocation.getAccuracy()) + "\n" +
+                                                        "Time : " + String.valueOf(mLocation.getTime())
+                                        ));
+                                displayToast(getString(R.string.addPOI));
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+            }
         } else {
-            new AlertDialog.Builder(this)
-                    .setTitle("Confirmation")
-                    .setMessage(
-                            "La précision de votre position est supérieure à 5 mètres. \n \n " +
-                            "Position actuelle : "+String.valueOf(mLocation.getAccuracy())+" m. \n \n " +
-                            "Ajouter quand même ?"
-                    )
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            LatLng marker = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-                            mMap.addMarker(new MarkerOptions().position(marker)
-                                    .title(
-                                            "Accuracy : "+String.valueOf(mLocation.getAccuracy())+"\n" +
-                                                    "Time : "+ String.valueOf(mLocation.getTime())
-                                    ));
-                            displayToast(getString(R.string.addPOI));
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
+            displayToast("Aucune localisation");
         }
+
     }
 
     /**
@@ -352,7 +370,51 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * Function to save the polygon draw.
      */
     private void save(){
+
         Log.d("Buttons", "save button pressed");
+
+        eu.ensg.spatialite.geom.Polygon polygon = convertGooglePolygonToSpatialitePolygon();
+        storeDistrict("District", "no description yet !", polygon);
+
+    }
+
+    public eu.ensg.spatialite.geom.Polygon convertGooglePolygonToSpatialitePolygon(){
+        eu.ensg.spatialite.geom.Polygon polygon = new eu.ensg.spatialite.geom.Polygon();
+        if (!mPolygonOptions.getPoints().isEmpty()) {
+            for (LatLng marker : mPolygonOptions.getPoints()) {
+                polygon.addCoordinate(new XY(marker.latitude, marker.longitude));
+            }
+        }
+        Log.d("POLYGON",polygon.toString());
+        return polygon;
+    }
+
+    private void storeDistrict(String name, String description, eu.ensg.spatialite.geom.Polygon area) {
+        try {
+            database.exec("INSERT INTO District (foresterID, name, description, area) VALUES (" + foresterID + ", " + DatabaseUtils.sqlEscapeString(name) + ", " + DatabaseUtils.sqlEscapeString(description) + ", " + area.toSpatialiteQuery(ForesterSpatialiteOpenHelper.GPS_SRID) + ")");
+            displayToast("Polygon added to database");
+        } catch (jsqlite.Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sql Error !!!!", Toast.LENGTH_LONG).show();
+        } catch (BadGeometryException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Polygon marshalling Error !!!!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void initDatabase() {
+
+        try {
+            SpatialiteOpenHelper helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
+            Log.d("Database", "Database initialized");
+            displayToast("Database initialized");
+        } catch (jsqlite.Exception | IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Cannot initialize database !", Toast.LENGTH_LONG).show();
+            Log.d("Database", "Database Failed");
+        }
+
     }
 
 }
