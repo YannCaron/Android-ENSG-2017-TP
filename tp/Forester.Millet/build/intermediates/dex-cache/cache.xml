@@ -3,534 +3,525 @@
 
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="92c871a22463a247e8a77a9f3fd231c278788c4a">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-panorama-10.0.1_3fb03679385fe917c88ba20539d2fa26491deb35/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="408a599ac77cd17fe8e8919326bec617b3d005bd">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wearable-10.0.1_27837cdb9b5f1b9770aadbc2a3166497edc78d72/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e96c6974cf924e7ee3b230e6847d5731423388c9">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-base-10.0.1_9781b0853c40b09ec7f236c8dd8ee9b6a1cc269e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="27777b3cad3c20b1acab19f6e37fe3e03371bf6e">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-10.0.1_3ba6d6343dd0c4ad0b50ab3ed2069ba374880aee/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="1d193729baf37df3d902a423291423a0df7e3779">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-10.0.1_d8a590c8d67225852f6cfce278acb940cdf07954/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-10.0.1_47f59624eb0781472588eae04de25a7d1feaaa07/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="96de4983c1a6c84d1de1601be419b5adcd2b44ff">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_b399fdbb749b349c043c1ff647e06518f13cbc3d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c14f0c89f28cf782e42581ab0aba5f63af39b3d2">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-plus-10.0.1_10e4b9b6a0c9005a741b2872dbd2710da6c1ac54/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2d5d113b0352ab60946fc44c518cf68fd26cbb79">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wallet-10.0.1_d143f1fbdbc3496ded6dadc46a25ec8fd260c305/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/palette-v7/24.0.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-palette-v7-24.0.0_2e2771d961b91c29aae9cf48bd7e401f87eccc19/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-10.0.1_7d4f82806bca0529bb4b734a0751e011e784bebc/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="028f8255cb977b29cdffbfcf05caa0459686120c">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-drive-10.0.1_08f457929d62d3396204aaff7b8599b484610e41/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d0460bf07cc3657e0be518ca01c174493951c6b8">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-10.0.1_2d0e517bd88af6399691fb55be78b18480d7cc09/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-10.0.1_ab5f5b88de18f51de8a34c16b222fec4158e62e0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="0d191c1a09e4892d059e5ce749e4ad4e08129e35">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.1.1_39fa1bc0b2d9e286fa8f430d6d37e419c0294e71/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ba6aa5e69ef31dee57208125323cee958fc67565">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-vision-10.0.1_28ead00425b4bc9bb76ca51b8652be52f53b1b51/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="02741d05d4b697fba5e279e9881aaa1da0ca7c7f">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.1.1_c3126419afff7b63f0955b5d93f8cc884b729e7e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="dd39827d2067497e60e21da48a7926000b6d4b0c">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-10.0.1_aa3ec57aa6cc88e5a89d9d97e813aebfa9a715e4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/libs/internal_impl-24.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b6763651ec29b4c95e7bbe63fc393ffcc8c4c2c5">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.0.0_d93486e819dbfbe78dcbb2fe07ad35ff5e74992e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-api/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b1df8fa3d372a27e4e969ce00b00689ee1eed031">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-api-10.0.1_3c185d258e7a2fd11d4b9a39ccacbaf7643459a9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5985a7005fc2cf4a17aff982516923c3a250fa22">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_6f4827db68528bcec972f02b28d03864a344ac13/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-config/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ffc15e965a9e8c28f24455eedd4cac215c45d1fc">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-config-10.0.1_5ab7bf134cd8d0727eb9a5c609a489a7e86872f8/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-10.0.1_4fbcc3a993fbb30a82d5b7c8402288ed95eb9ac8/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-awareness/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4385ccc0a88b33d182a836eadb47be55c8eb1107">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-awareness-10.0.1_fb52c32d9629c3ac2e21e5603def993f062da07b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4c829ff0ccfecb28a999ee46d9e75948dfc777a4">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-10.0.1_98936d5eaf38a0467b1583e7ebf49341bb258fa0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="3e04ac8ca644ea7baddf6fdcf72e15c79e9df94a">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.1.1_dc39ae2984d296a7f88f7006ba1e410d66a24fbb/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-10.0.1_af2e9da0f79638c67962034bcff5eb11da345eb9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="0fb891e8f0cfba0513043a7bb357513d229ca2cd">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.1.1_cc0ea637c0ac34d96ceb05dff0fabe5c21dec221/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e2719c102dca3a7a5b02ce07f769362da6ddb4ab">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.1.1_6fc99f10a3f5e51360a5e701200a7e384a4747e1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-instantapps/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="45305e6af414dab5aba6c3225081c2f15c3bdd1e">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-instantapps-10.0.1_eec0c172ff15560cadf59dc678f437bbcd54981c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-iid/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6bb5d347ebc0c6ef3c83a905222a688da5d2f7b4">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-iid-10.0.1_54e5b382256018aad9ba0ee64701f790652ad687/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gass/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="57c2eceb8548de84509d1ebc293fedec53231f6c">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gass-10.0.1_b7327ff1af2faddf990af6734a9c30254d654e59/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="44a694d4095be84c2888764b1f7256b385c030ad">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-10.0.1_ffd93be3392531a675b1ad8aeaaf2a808e85f495/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4b17463c814bdc562fb0392fa3494063623a0904">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-10.0.1_ec01efc886fd2aa4dede79eb20ab05913fc3e68a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.1.1_422d545e6a70f7d753989043c74f2c43f70d44b3/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="971509bbe30bb7b971fc1c49d7b23d0d818830ac">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-10.0.1_116de2e21f29b8ee309a8734bc0dd0513133ce5a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.1.1_af818c02401ab8fa6b8fe3b7c503d83918bbae7a/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="771267c5b0c7a5b348d3205dcfa1f871af7e0177">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-10.0.1_cf37284e7fd1ce5137d0daac27d0e3ce4d8c1e2d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-crash/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="de29a39f9260f88151b1ef453140e71c76b6c415">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-crash-10.0.1_6b794f626080faa51885c216e2ae8ede0fcc9713/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-10.0.1_81d0bf13bb3500d11028cec09942a364ec345e99/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage-common/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="09cf6aa1390f95157e8295d02be7868f568825fc">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-common-10.0.1_02bf1e823d57643c0a401eed8a7e00b10b91ab60/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a48dc0b148059764d32500be558702d5ff932058">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-10.0.1_72313156b5694156ef13b8099128c77ff0a5fe8c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7a64bf6dc775198eed9db9468a133adf7dfe6562">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-fitness-10.0.1_17b467ad565411dab7af0071f6d1d1daa28a8720/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads-lite/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b955cb3a1ad6f1b6ff728ce1e0cd592c1717b440">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-lite-10.0.1_34fcab4cbb5a329c4d941310f2f077156da0617c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-mediarouter-v7-24.0.0_da958dc4610acd422c30af0184582a307344d352/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="f6cf557be4dbd0282ea2388633e5378634423226">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-safetynet-10.0.1_e2095995d79fa8354b9b07faf32cab05e202f7fa/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c6e1f361e9d61aece9dac39b77fcc98a337a144d">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-nearby-10.0.1_8c98d8e8bfe7ca5f3bf74994e179c0cb249761f0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="39907d5c8f5902fffef30160ca7447c93b82405c">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appinvite-10.0.1_d67cddd5196a71fd5142e044ae10a331a3f957a2/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="8308ed003522a2ee8958311afcc4cfd0470377cd">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-10.0.1_7dc4e3760bea6bdaa89a710632820f8ba30666a4/classes.dex" />
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-10.0.1_1ad96d7f50bff00bef713b7107233ee2d4174cd9/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-10.0.1_56efafb687180d5f2e26802d2d426d58f8806dc0/classes.dex" />
+        sha1="44a694d4095be84c2888764b1f7256b385c030ad">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-10.0.1_f880b2c50e908d51ee7d8952743b90b2891f64b1/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="c03bf57f358aa10d253f21989e93bcf6014b3b17">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.1.1_b08768c26c94ac59bb5f923f91de7d4c8ada646f/classes.dex" />
+        sha1="a48dc0b148059764d32500be558702d5ff932058">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-10.0.1_dcf409caaa257595168da60ee58a48c5416b2c4d/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/10.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e2185aff89caeb337b1ffc36d5e525d8318e7cfe">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-10.0.1_57acd02893af59d16d3b91172f8dfb392f35acb7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-v4-impl/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-v4-impl/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="f23ad0f8e58713ff4b55f61c0bbde3830378347c">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-v4-impl-10.0.1_6cd646bf07336ca6ed13a4237e4d5f663e21ed71/classes.dex" />
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-v4-impl-10.0.1_e5853aafda8f5d8902442fc1d010b8a2cf993319/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-10.0.1_88826445445a54b2330a68c42444d3fb3c68926d/classes.dex" />
+        sha1="408a599ac77cd17fe8e8919326bec617b3d005bd">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wearable-10.0.1_36a0e438518738fbed84271987f2e86db643f932/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-10.0.1_1bfade42be347558a09673ccad5e04fa164b6653/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-10.0.1_b0f64b557361468bb835cc8cc44de95d8e4320fe/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics-impl/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e871881b36b32e6bfd271a830c6eeb54ff0fc185">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-impl-10.0.1_0ace3fb5507fa220d7a107c656d473464f765392/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-instantapps/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="45305e6af414dab5aba6c3225081c2f15c3bdd1e">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-instantapps-10.0.1_cb97558c0e5f999727df240318d66f687b6a69d8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2d5d113b0352ab60946fc44c518cf68fd26cbb79">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-wallet-10.0.1_9a439e3339a9130dd4999019bdc7ae0c52ba67b4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="971509bbe30bb7b971fc1c49d7b23d0d818830ac">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-10.0.1_4d11cd57a7537f8f576b2029c91428e1eb7889e4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-10.0.1_c13d48283200ba66b8c4c5ebe0fe18d4b58f80c4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0fb891e8f0cfba0513043a7bb357513d229ca2cd">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.1.1_e0ae17adb2cb6f83c67123f341fe4ed14842fb48/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4c829ff0ccfecb28a999ee46d9e75948dfc777a4">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-10.0.1_65ba01d48bd745938d7eafeff9f9c3946c06895a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-10.0.1_6b209d4b2eb6283091b16853085646a9f8bfbcc7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="39907d5c8f5902fffef30160ca7447c93b82405c">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appinvite-10.0.1_f25c2a10026ec5d2e9ea1094e9fac8992dc56810/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd39827d2067497e60e21da48a7926000b6d4b0c">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-10.0.1_05988e363a62b874166714ad5a5c11ffa221d064/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3e04ac8ca644ea7baddf6fdcf72e15c79e9df94a">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.1.1_0fd08bfa036c0a8e98ab7a765d13aa8d395c3ba9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-storage-common/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="09cf6aa1390f95157e8295d02be7868f568825fc">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-storage-common-10.0.1_8117675b0c72cb97e462a28a34cb0b580dc55c1f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4b17463c814bdc562fb0392fa3494063623a0904">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-messaging-10.0.1_711fc26ec6053e4dde758c2a100ce720b5da9fce/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="7bde4c34162092e0a77e7f12dc85ed77c484cf5c">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.1.1_b7f41fe514a2c917d5a8e8bf19a93be466b6a357/classes.dex" />
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.1.1_a63bb64adf16b543aedc816959d89bf5482dbe43/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="771267c5b0c7a5b348d3205dcfa1f871af7e0177">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-10.0.1_694ffaaa2c5f8957cb00efbbb5c9f2f317dedc91/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-connection-10.0.1_da6981ea7dab7d583e3bb51f75367da28c762a27/classes.dex" />
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-database-connection-10.0.1_d39641076a20bf3943df7f5b1593465a0c7a9c92/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-10.0.1_3f5dc192d4756d618eed58d8688d1ed8fe119fb1/classes.dex" />
+        sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.1.1_6bceaf9a047c79f03cfca5b4d919e5486c6f1659/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast-framework/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-appindexing/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ae80d328a8548b4610ead6c624bab8c6a6984f5b">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-appindexing-10.0.1_790b37980d58f841b1ac160e095d8cd73b9cbf97/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast-framework/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="df1cb17511aabbb63264a0024949d1e42502a512">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-framework-10.0.1_d22d8119ecbabb167c9633912cf6f10d8fe2225a/classes.dex" />
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-framework-10.0.1_7482fc2ec27f672a8af77c5f122adb33085d6d5c/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4209b839c08aea7a0a7323ccf76b6d2a46861652">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_e37b3b68cff7a227b9daa680c5c6633a78e65a8a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-10.0.1_83397b892b50405646c8415060f2aad5642df312/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d0460bf07cc3657e0be518ca01c174493951c6b8">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-10.0.1_4024e61ea73e554f792486e83c9fea40d2251639/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7a64bf6dc775198eed9db9468a133adf7dfe6562">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-fitness-10.0.1_fb6bee6cc15add0a70215fa8b8ff1d9f4a104868/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/palette-v7/24.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-palette-v7-24.0.0_c3799c594ca4c9e29de8e6eaeeeebe171abadfd8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="92c871a22463a247e8a77a9f3fd231c278788c4a">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-panorama-10.0.1_e127770fdecf5e2a462a962cb90a9e6d2af68082/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e2719c102dca3a7a5b02ce07f769362da6ddb4ab">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.1.1_41e399b01310bc372a7544702739fc1f7241afb3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c03bf57f358aa10d253f21989e93bcf6014b3b17">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.1.1_a1e018fd6d53e6283843ec1859797f6482a037e3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c6e1f361e9d61aece9dac39b77fcc98a337a144d">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-nearby-10.0.1_a82350d800924fe2ff0f50b3baf010188d1d1c0a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="028f8255cb977b29cdffbfcf05caa0459686120c">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-drive-10.0.1_dd29aa740390e8021564500ff132e24344eb79a1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.1.1_e7d92e11b3ac2700ac0c4032b77d2ce0418af8d7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f6cf557be4dbd0282ea2388633e5378634423226">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-safetynet-10.0.1_e9bbf973c41bbd1e6322e47e9628458769c79a6e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c5c3cf385b973b2db2c4f2c1a4b40ff747fb5704">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_c222a95de0fcf67a65e9fad57eae00530e2b5811/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="1e11c68fec92a17c84dd8d1dd80e74c4e67b12e2">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-games-10.0.1_76112afbe08cad28e5aa1c159f7c61f14c433755/classes.dex" />
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-games-10.0.1_f3993f0c5eacbafa713b173e620305f8de046b98/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0d191c1a09e4892d059e5ce749e4ad4e08129e35">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.1.1_b90cc3775f9fbaa3dda75b0f670614e2b0868f6c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ba6aa5e69ef31dee57208125323cee958fc67565">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-vision-10.0.1_ff9e4ed8bb5c4ed2fe6ff15a47d89b14c0112fc3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-10.0.1_232dd673b5d4445e691dff3a6dd84be6edd16208/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e2185aff89caeb337b1ffc36d5e525d8318e7cfe">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-10.0.1_3dcb9ad690942f92b702caee33c0ba765503b1c2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1d193729baf37df3d902a423291423a0df7e3779">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-10.0.1_07535e0fc55ded3716ea39e1661d282ef92aa6a2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-places/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f3e51e9c5233b8897f61e08a6a27bc36283c2724">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-places-10.0.1_4842270a206b396fac0ab4365020d8971b0ac2d0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-awareness/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4385ccc0a88b33d182a836eadb47be55c8eb1107">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-awareness-10.0.1_cfad01b31aa8b806dff4d95522cb3a2995c60c43/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads-lite/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b955cb3a1ad6f1b6ff728ce1e0cd592c1717b440">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-ads-lite-10.0.1_95fbaeb6f539199f053b096aabf4e21cdfa24074/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-iid/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6bb5d347ebc0c6ef3c83a905222a688da5d2f7b4">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-iid-10.0.1_45a2c8b748f870cfab98dcd71fee2c2bbeb75685/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-10.0.1_c7569fda73361cacf42823301083f824f173462b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c14f0c89f28cf782e42581ab0aba5f63af39b3d2">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-plus-10.0.1_a9e2cdb91c807a7bbf87c8fd5d5c3b7cb98260b4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="02741d05d4b697fba5e279e9881aaa1da0ca7c7f">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.1.1_c98f387de11ab9077bfa71230e9dae05f1e7c3b6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-config/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ffc15e965a9e8c28f24455eedd4cac215c45d1fc">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-config-10.0.1_ed99781c060a0e81fdeb86dfb7b8df982f81cb78/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-10.0.1_658ea4ca246ba8497b3908b343e35dcb966a0fbd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gass/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="57c2eceb8548de84509d1ebc293fedec53231f6c">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gass-10.0.1_5cb55ac5fa61673c8a97706c6c4909ab3853f7d4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-api/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b1df8fa3d372a27e4e969ce00b00689ee1eed031">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-api-10.0.1_6fe1b9c2944bf19899e1c2c6c11a02cd57abc114/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-10.0.1_a80428c85e6c79f97a88a602348d5a7818c2d70c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="27777b3cad3c20b1acab19f6e37fe3e03371bf6e">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-10.0.1_b954e726feca477d24a1ddad12113b6aaabf31b1/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -539,34 +530,43 @@
         optimize="true"
         revision="25.0.2"
         sha1="b59b6ee8d6ecc03e672d253800430343493a6ed8">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.1.1_488e00f0817f19c6a0d6fbe0465e76e0f967526f/classes.dex" />
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.1.1_488e00f0817f19c6a0d6fbe0465e76e0f967526f/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-appindexing/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.firebase/firebase-crash/10.0.1/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="ae80d328a8548b4610ead6c624bab8c6a6984f5b">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-appindexing-10.0.1_b32633e892b5ff77f344d4ea4658e3b98df35898/classes.dex" />
+        sha1="de29a39f9260f88151b1ef453140e71c76b6c415">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-crash-10.0.1_bf8ccc7afc3ac2f8cca6ba62c2001f9263754164/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-places/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="f3e51e9c5233b8897f61e08a6a27bc36283c2724">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-places-10.0.1_7af10a0522346eb76444621dbe6b0924af6fe99e/classes.dex" />
+        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-mediarouter-v7-24.0.0_f6f8b3de013424ff4bf5766458431b26d3e2b225/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics-impl/10.0.1/jars/classes.jar"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/libs/internal_impl-24.0.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="e871881b36b32e6bfd271a830c6eeb54ff0fc185">
-        <dex dex="/home/prof/Documents/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-analytics-impl-10.0.1_dc63576417a0ad9fb2a743c195ef2c475d8cfd03/classes.dex" />
+        sha1="b6763651ec29b4c95e7bbe63fc393ffcc8c4c2c5">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.0.0_6d65c35d758b0fa50128de41e8379048a6fd1141/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/10.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e96c6974cf924e7ee3b230e6847d5731423388c9">
+        <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-base-10.0.1_5b03463ed073e26670fa2b76b991b43d95aa9f32/classes.dex" />
     </item>
 
 </items>

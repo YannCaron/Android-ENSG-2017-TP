@@ -49,6 +49,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Integer forester_id = getIntent().getIntExtra(EXTRA_FORESTER_ID, -1);
     private SpatialiteDatabase database;
+    private boolean permission = false;
+    private Integer nb_pointsector = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,18 +119,27 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
-            float lat = (float) (location.getLatitude());
-            float lng = (float) (location.getLongitude());
-            currentPoint = new Point(location.getLatitude(),location.getLatitude());
-            Log.i(MapsActivity.class.getName(), String.valueOf(lat));
-            Log.i(MapsActivity.class.getName(), String.valueOf(lng));
-            LatLng last_localisation = new LatLng(lat, lng);
-            //mMap.clear();
-            //mMap.addMarker(new MarkerOptions().position(last_localisation).title("Localisation"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(last_localisation));
-            TextView label = (TextView)findViewById(R.id.coordinates);
-            //label.setText(lat+" , "+lng);
-            label.setText(String.format("%s , %s", lat, lng));
+            if (permission){
+                currentPoint = new Point(location.getLatitude(), location.getLatitude());
+                sector.addCoordinate(currentPoint.getCoordinate());
+                nb_pointsector ++;
+                for( XY coord : sector.getCoordinates().getCoords()){
+                    draw.add(new LatLng(coord.getX(),coord.getY()));
+                }
+                draw.fillColor(0x009900);
+            } else {
+                float lat = (float) (location.getLatitude());
+                float lng = (float) (location.getLongitude());
+                Log.i(MapsActivity.class.getName(), String.valueOf(lat));
+                Log.i(MapsActivity.class.getName(), String.valueOf(lng));
+                LatLng last_localisation = new LatLng(lat, lng);
+                //mMap.clear();
+                //mMap.addMarker(new MarkerOptions().position(last_localisation).title("Localisation"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(last_localisation));
+                TextView label = (TextView) findViewById(R.id.coordinates);
+                //label.setText(lat+" , "+lng);
+                label.setText(String.format("%s , %s", lat, lng));
+            }
         } else {
             Log.w(MapsActivity.class.getName(), "Provider not available");
             Log.w(MapsActivity.class.getName(), "Provider not available");
@@ -208,6 +219,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void onSectorSelected(){
+        permission = true;
         Button buttonsave;
         Button buttonabord;
         mainlayout = (LinearLayout)this.findViewById(R.id.ls);
@@ -236,39 +248,34 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void onSaveSelected(View v) {
-        sector.addCoordinate(currentPoint.getCoordinate());
-        mMap.addMarker(new MarkerOptions()
-                .position(currentPoint.toLatLng())
-                .title("Sector")
-                .snippet(String.format("%s", currentPoint.toString()))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-        );
-        try {
-            database.exec(
-                    "INSERT INTO District (ForesterID, Name, Description, Area "
-                    + "VALUES ("
-                    + forester_id
-                    + ","
-                    + "Point of interest"
-                    + ","
-                    + DatabaseUtils.sqlEscapeString(sector.toString())
-                    + ","
-                    + sector.toSpatialiteQuery(4326)
-                    + ")"
-            );
-        } catch (Exception e) {
-            e.printStackTrace();
-        } catch (BadGeometryException e) {
-            e.printStackTrace();
+        if (nb_pointsector > 3){
+            try {
+                database.exec(
+                        "INSERT INTO District (ForesterID, Name, Description, Area "
+                                + "VALUES ("
+                                + forester_id
+                                + ","
+                                + "Point of interest"
+                                + ","
+                                + DatabaseUtils.sqlEscapeString(sector.toString())
+                                + ","
+                                + sector.toSpatialiteQuery(4326)
+                                + ")"
+                );
+            } catch (Exception e) {
+                e.printStackTrace();
+            } catch (BadGeometryException e) {
+                e.printStackTrace();
+            }
+            TextView label = (TextView)findViewById(R.id.coordinates);
+            label.setText(String.format("%s", currentPoint.toString()));
+            mainlayout.setVisibility(LinearLayout.GONE);
+            Toast.makeText(this, "Point recorded !", Toast.LENGTH_LONG).show();
+            permission = false;
+            nb_pointsector = 0;
+        } else {
+            Toast.makeText(this, "Pas assez de points !", Toast.LENGTH_LONG).show();
         }
-        TextView label = (TextView)findViewById(R.id.coordinates);
-        label.setText(String.format("%s", currentPoint.toString()));
-        mainlayout.setVisibility(LinearLayout.GONE);
-        Toast.makeText(this, "Point recorded !", Toast.LENGTH_LONG).show();
-        for( XY coord : sector.getCoordinates().getCoords()){
-            draw.add(new LatLng(coord.getX(),coord.getY()));
-        }
-        draw.fillColor(0x009900);
     }
 
     private void onAbortSelected() {
