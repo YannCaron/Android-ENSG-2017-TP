@@ -236,7 +236,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         DatabaseUtils.sqlEscapeString(currentPosition.toString()) + ", " +
                         currentPosition.toSpatialiteQuery(4326) + ")");
 
-
+                markPOI(currentPosition);
 
                 Toast.makeText(this, "Point registered", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
@@ -310,7 +310,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(currentPosition.toLatLng())
                 .title("Point of interest")
                 .snippet(position.toString())
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition.toLatLng()));
     }
 
