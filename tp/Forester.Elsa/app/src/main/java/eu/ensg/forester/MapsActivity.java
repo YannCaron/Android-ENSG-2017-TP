@@ -39,6 +39,7 @@ import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
 import jsqlite.Exception;
+import jsqlite.Stmt;
 
 import static eu.ensg.forester.Constants.EXTRA_FORESTER_ID;
 
@@ -162,6 +163,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.w(this.getClass().getName(), "Provider not available");
         }
 
+        // dessine points intérets et sector de la database
+        loadPOI();
+        loadSector();
+
         // attache le callback
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1, this);
     }
@@ -231,11 +236,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         DatabaseUtils.sqlEscapeString(currentPosition.toString()) + ", " +
                         currentPosition.toSpatialiteQuery(4326) + ")");
 
-                mMap.addMarker(new MarkerOptions().position(currentPosition.toLatLng())
-                        .title("Point of interest")
-                        .snippet(currentPosition.toString())
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition.toLatLng()));
+
 
                 Toast.makeText(this, "Point registered", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
@@ -269,7 +270,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         DatabaseUtils.sqlEscapeString(currentSector.toString()) + ", " +
                         currentSector.toSpatialiteQuery(4326) + ")");
 
-                isRecording = false;
+                isRecording = false; currentSector = null;
                 layoutSector.setVisibility(View.GONE);
                 currentDrawPolygon.setFillColor(0x7F0000FF);
                 currentDrawPolygon.setStrokeColor(Color.BLUE);
@@ -303,5 +304,51 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
 
+    }
+
+    private void markPOI(Point position){
+        mMap.addMarker(new MarkerOptions().position(currentPosition.toLatLng())
+                .title("Point of interest")
+                .snippet(position.toString())
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition.toLatLng()));
+    }
+
+    private void drawSector(Polygon sector){
+        PolygonOptions poly = new PolygonOptions();
+        for (XY coord:sector.getCoordinates().getCoords()){
+            poly.add(new LatLng(coord.getY(), coord.getX()));
+        }
+        com.google.android.gms.maps.model.Polygon polygonDraw = mMap.addPolygon(poly);
+        polygonDraw.setFillColor(0x7F0000FF);
+        polygonDraw.setStrokeColor(Color.BLUE);
+    }
+
+
+    private void loadPOI() {
+        try {
+            Stmt stmt = database.prepare("SELECT name, description, ST_asText(position) FROM PointOfInterest WHERE foresterID = " + foresterID);
+            while (stmt.step()) {
+                Point position = Point.unMarshall(stmt.column_string(2));
+                markPOI(position);
+            }
+        } catch (jsqlite.Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sql error ", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void loadSector() {
+        try {
+            Stmt stmt = database.prepare("SELECT name, ST_asText(Area) as Area FROM District WHERE foresterID = " + foresterID);
+            while (stmt.step()) {
+                Polygon polygon = Polygon.unMarshall(stmt.column_string(1));
+                drawSector(polygon);
+
+            }
+        } catch (jsqlite.Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sql error ", Toast.LENGTH_LONG).show();
+        }
     }
 }
