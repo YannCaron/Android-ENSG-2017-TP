@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import dbAcces.ForesterSpatialiteOpenHelper;
 import eu.ensg.spatialite.SpatialiteDatabase;
@@ -39,6 +40,7 @@ import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
 import jsqlite.Exception;
+import jsqlite.Stmt;
 
 import static eu.ensg.forester.Constants.EXTRA_FORESTER_ID;
 
@@ -168,6 +170,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng paris = new LatLng(48, 2);
         //mMap.addMarker(new MarkerOptions().position(paris).title("Marker in Paris").snippet("Ici c'est Paris !"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(paris));
+
+        // Affiche les poi et le secteurs déjà présents dans la base de données et entré par l'utilisateur
+        recoverPoiInDb();
+        recoverSecInDb();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -417,13 +423,68 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         try {
-            database.exec("INSERT INTO PointOfInterest (Name, ForesterID, Description, position) " +
+            database.exec("INSERT INTO Sector (Name, ForesterID, Description, position) " +
                     "VALUES ("+
                     DatabaseUtils.sqlEscapeString(name) + ", " +
                     foresterID + ", " +
                     DatabaseUtils.sqlEscapeString(description)+ ", " +
                     sqSec +
                     ");");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void recoverPoiInDb(){
+        // Prépare la requête de récupération
+        try {
+            Stmt stmt = database.prepare("SELECT Name, Description, ST_asText(position) FROM PointOfInterest WHERE ForesterID = " + foresterID);
+
+            while(stmt.step()){
+                String name = stmt.column_string(0);
+                String comment = stmt.column_string(1);
+                String coordStr = stmt.column_string(2);
+
+                Log.d("Yop",coordStr);
+
+                // Création du point
+                Point coord = Point.unMarshall(coordStr);
+
+                Log.d("Yop",coord.toLatLng().toString());
+                // Ajoute les points à la carte
+                mMap.addMarker(new MarkerOptions().position(coord.toLatLng()).title(name).snippet(comment));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void recoverSecInDb(){
+        // Prépare la requête de récupération
+        try {
+            Stmt stmt = database.prepare("SELECT Name, Description, ST_asText(position) FROM Sector WHERE ForesterID = " + foresterID);
+
+            while(stmt.step()){
+                String name = stmt.column_string(0);
+                String comment = stmt.column_string(1);
+                String geomStr = stmt.column_string(2);
+
+                // Création du point
+                Polygon poly = Polygon.unMarshall(geomStr);
+                PolygonOptions polyOption = new PolygonOptions();
+                polyOption.strokeColor(Color.GREEN)
+                        .fillColor(Color.YELLOW);
+
+                for(XY coord : poly.getCoordinates().getCoords()){
+                    polyOption.add(new LatLng(coord.getY(),coord.getX()));
+                }
+
+                mMap.addPolygon(polyOptions);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
