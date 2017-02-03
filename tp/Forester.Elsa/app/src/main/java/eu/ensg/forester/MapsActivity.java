@@ -2,6 +2,7 @@ package eu.ensg.forester;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
@@ -28,17 +29,32 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 
+import java.io.IOException;
+
+import eu.ensg.forester.data.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+import eu.ensg.spatialite.geom.BadGeometryException;
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
+import jsqlite.Exception;
+import jsqlite.Stmt;
+
+import static eu.ensg.forester.Constants.EXTRA_FORESTER_ID;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+
+    // la database
+    private SpatialiteDatabase database;
 
     private GoogleMap mMap;
     private Point currentPosition;
     private TextView lblPosition;
     private Polygon currentSector;
     private com.google.android.gms.maps.model.Polygon currentDrawPolygon;
+
+    private int foresterID;
 
     boolean isRecording = false;
 
@@ -56,6 +72,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         buttonAbort = (Button)findViewById (R.id.abort);
         layoutSector = findViewById(R.id.layout_sector);
 
+        // On récupère le serial
+        foresterID = getIntent().getIntExtra(EXTRA_FORESTER_ID, -1);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -74,6 +92,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 abort_onClick(v);
             }
         });
+
+        // Initialisation de la database
+        initDatabase();
     }
 
 
@@ -142,6 +163,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.w(this.getClass().getName(), "Provider not available");
         }
 
+        // dessine points intérets et sector de la database
+        loadPOI();
+        loadSector();
+
         // attache le callback
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1, this);
     }
@@ -203,12 +228,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void onSelectedAddPoint(MenuItem item){
         Log.i(this.getClass().getName(), "Add point of interest");
         if (currentPosition != null) {
-            mMap.addMarker(new MarkerOptions().position(currentPosition.toLatLng())
-                    .title("Point of interest")
-                    .snippet(currentPosition.toString())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition.toLatLng()));
-            Toast.makeText(this, "Point registered", Toast.LENGTH_LONG).show();
+            try {
+                database.exec("INSERT INTO PointOfInterest (foresterID, name, description, position) " +
+                        "VALUES (" +
+                        foresterID + ", " +
+                        DatabaseUtils.sqlEscapeString("Point of interest") + ", " +
+                        DatabaseUtils.sqlEscapeString(currentPosition.toString()) + ", " +
+                        currentPosition.toSpatialiteQuery(4326) + ")");
+
+
+
+                Toast.makeText(this, "Point registered", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Sql error", Toast.LENGTH_LONG).show();
+            } catch (BadGeometryException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Polygon marshalling error", Toast.LENGTH_LONG).show();
+            }
         }else{
             Toast.makeText(this, "Not available !", Toast.LENGTH_LONG).show();
         }
@@ -223,10 +260,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void save_onClick(View v) {
-        isRecording = false;
-        layoutSector.setVisibility(View.GONE);
-        currentDrawPolygon.setFillColor(0x7F0000FF);
-        currentDrawPolygon.setStrokeColor(Color.BLUE);
+        Log.i(this.getClass().getName(), "Add sector");
+        if (currentPosition != null) {
+            try {
+                database.exec("INSERT INTO District (foresterID, name, description, Area) " +
+                        "VALUES (" +
+                        foresterID + ", " +
+                        DatabaseUtils.sqlEscapeString("Sector") + ", " +
+                        DatabaseUtils.sqlEscapeString(currentSector.toString()) + ", " +
+                        currentSector.toSpatialiteQuery(4326) + ")");
+
+                isRecording = false; currentSector = null;
+                layoutSector.setVisibility(View.GONE);
+                currentDrawPolygon.setFillColor(0x7F0000FF);
+                currentDrawPolygon.setStrokeColor(Color.BLUE);
+
+                Toast.makeText(this, "Sector registered", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Sql error", Toast.LENGTH_LONG).show();
+            } catch (BadGeometryException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Polygon marshalling error", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            Toast.makeText(this, "Not available !", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -234,5 +293,62 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         isRecording = false;
         layoutSector.setVisibility(View.GONE);
 
+    }
+
+    private void initDatabase() {
+        SpatialiteOpenHelper helper = null;
+        try {
+            helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
+        } catch (Exception | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void markPOI(Point position){
+        mMap.addMarker(new MarkerOptions().position(currentPosition.toLatLng())
+                .title("Point of interest")
+                .snippet(position.toString())
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition.toLatLng()));
+    }
+
+    private void drawSector(Polygon sector){
+        PolygonOptions poly = new PolygonOptions();
+        for (XY coord:sector.getCoordinates().getCoords()){
+            poly.add(new LatLng(coord.getY(), coord.getX()));
+        }
+        com.google.android.gms.maps.model.Polygon polygonDraw = mMap.addPolygon(poly);
+        polygonDraw.setFillColor(0x7F0000FF);
+        polygonDraw.setStrokeColor(Color.BLUE);
+    }
+
+
+    private void loadPOI() {
+        try {
+            Stmt stmt = database.prepare("SELECT name, description, ST_asText(position) FROM PointOfInterest WHERE foresterID = " + foresterID);
+            while (stmt.step()) {
+                Point position = Point.unMarshall(stmt.column_string(2));
+                markPOI(position);
+            }
+        } catch (jsqlite.Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sql error ", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void loadSector() {
+        try {
+            Stmt stmt = database.prepare("SELECT name, ST_asText(Area) as Area FROM District WHERE foresterID = " + foresterID);
+            while (stmt.step()) {
+                Polygon polygon = Polygon.unMarshall(stmt.column_string(1));
+                drawSector(polygon);
+
+            }
+        } catch (jsqlite.Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sql error ", Toast.LENGTH_LONG).show();
+        }
     }
 }
