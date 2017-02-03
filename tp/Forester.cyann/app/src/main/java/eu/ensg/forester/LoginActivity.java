@@ -78,18 +78,22 @@ public class LoginActivity extends AppCompatActivity implements Constants {
     private void login_onClick(View view) {
         Stmt stmt = null;
         try  {
-            int serial = Integer.valueOf(editSerial.getText().toString());
-             stmt = database.prepare("SELECT id FROM Forester where Serial = " + serial);
+            String serialStr = editSerial.getText().toString();
+            if (! "".equals(serialStr)) {
 
-            if (stmt.step()) {
-                int foresterId = stmt.column_int(0);
+                int serial = Integer.valueOf(serialStr);
+                stmt = database.prepare("SELECT id FROM Forester where Serial = " + serial);
 
-                Log.w(this.getClass().getName(), "ForesterID = " + foresterId);
+                if (stmt.step()) {
+                    int foresterId = stmt.column_int(0);
 
-                Intent intent = new Intent(this, MapsActivity.class);
-                intent.putExtra(EXTRA_FORESTER_ID, foresterId);
-                startActivity(intent);
-                return;
+                    Log.w(this.getClass().getName(), "ForesterID = " + foresterId);
+
+                    Intent intent = new Intent(this, MapsActivity.class);
+                    intent.putExtra(EXTRA_FORESTER_ID, foresterId);
+                    startActivity(intent);
+                    return;
+                }
             }
 
         } catch (Exception e) {
