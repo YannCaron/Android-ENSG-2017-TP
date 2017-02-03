@@ -38,6 +38,7 @@ import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
 import jsqlite.Exception;
+import jsqlite.Stmt;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, Constants {
 
@@ -142,8 +143,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             // Add a marker in Sydney and move the camera
             LatLng lastCoord = new LatLng(lat, lng);
-            mMap.addMarker(new MarkerOptions().position(lastCoord).title("Position initiale"));
+            //mMap.addMarker(new MarkerOptions().position(lastCoord).title("Position initiale"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(lastCoord));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
             Log.i(MapsActivity.class.getName(), String.valueOf(lat));
             Log.i(MapsActivity.class.getName(), String.valueOf(lng));
@@ -152,6 +154,46 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             position.setText("Provider not available");
         }
 
+        try {
+            Stmt stmt = database.prepare("SELECT name, description, ST_AsText(position) FROM PointOfInterest;");
+
+            while(stmt.step()) {
+                String name = stmt.column_string(0);
+                String description = stmt.column_string(1);
+                String position = stmt.column_string(2);
+                Point point = Point.unMarshall(position);
+
+                mMap.addMarker(new MarkerOptions().position(
+                        point.toLatLng()).title(name)
+                        .snippet(description));
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Stmt stmt = database.prepare("SELECT name, description, ST_AsText(area) FROM Sector");
+
+            while(stmt.step()) {
+                String name = stmt.column_string(0);
+                String description = stmt.column_string(1);
+                String area = stmt.column_string(2);
+                Polygon polygon = Polygon.unMarshall(area);
+
+                PolygonOptions poly = new PolygonOptions();
+                for (XY coord : polygon.getCoordinates().getCoords()) {
+                    poly.add(new LatLng(coord.getY(), coord.getX()));
+                }
+                poly.strokeColor(R.color.color_primary_dark);
+                mMap.addPolygon(poly);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -168,6 +210,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             for (XY coord : currentSector.getCoordinates().getCoords()) {
                 poly.add(new LatLng(coord.getY(), coord.getX()));
             }
+            poly.strokeColor(R.color.color_primary);
 
             if (currentDrawnPolygon != null) currentDrawnPolygon.remove();
             currentDrawnPolygon = mMap.addPolygon(poly);
@@ -217,6 +260,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.addMarker(new MarkerOptions().position(
                     currentPoint.toLatLng()).title("Point of interest")
                     .snippet(currentPoint.toString()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPoint.toLatLng()));
 
             try {
 
@@ -249,6 +293,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void onSaveRecordClicked(View view) {
+        isRecording = false;
         recordLayout.setVisibility(View.GONE);
 
         try {
@@ -262,6 +307,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     DatabaseUtils.sqlEscapeString(currentSector.toString()) + ", " +
                     currentSector.toSpatialiteQuery(4326) + ")");
 
+            currentSector = null;
+
         } catch (jsqlite.Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Sql Error !!!!", Toast.LENGTH_LONG).show();
@@ -272,7 +319,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void onAbortRecordClicked(View view) {
+        isRecording = false;
         recordLayout.setVisibility(View.GONE);
+        currentSector = null;
     }
 
 }
