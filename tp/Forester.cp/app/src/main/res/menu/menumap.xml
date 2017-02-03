@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Add POI"
+        android:id="@+id/add_poi"
+        android:visible="true" />
+    <item android:title="Add Sector"
+        android:id="@+id/add_sector"
+        android:visible="true" />
+</menu>
