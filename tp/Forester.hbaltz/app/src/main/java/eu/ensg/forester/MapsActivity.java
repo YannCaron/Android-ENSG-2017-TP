@@ -494,12 +494,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String comment = stmt.column_string(1);
                 String coordStr = stmt.column_string(2);
 
-                Log.d("Yop",coordStr);
-
                 // Création du point
                 Point coord = Point.unMarshall(coordStr);
 
-                Log.d("Yop",coord.toLatLng().toString());
                 // Ajoute les points à la carte
                 mMap.addMarker(new MarkerOptions().position(coord.toLatLng()).title(name).snippet(comment));
             }
@@ -647,9 +644,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     String temperature = meteoObs.getString("temperature");
                     String humidity = meteoObs.getString("humidity");
 
-                    tempTxt.append(" " + temperature + "°C");
-                    humTxt.append(" " + humidity+ "%");
-                    cloudTxt.append(" " + clouds);
+                    tempTxt.setText(getString(R.string.tmp)+" " + temperature + "°C");
+                    humTxt.setText(getString(R.string.hmd)+" " + humidity+ "%");
+                    cloudTxt.setText(getString(R.string.cld)+" " + clouds);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

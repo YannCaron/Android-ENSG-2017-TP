@@ -18,7 +18,7 @@
         android:id="@+id/lblPosition"
         android:background="@color/white"
         android:alpha="0.7"
-        android:layout_gravity="right|top" />
+        android:layout_gravity="right|bottom" />
 
     <LinearLayout
         android:id = "@+id/recordingMenu"
