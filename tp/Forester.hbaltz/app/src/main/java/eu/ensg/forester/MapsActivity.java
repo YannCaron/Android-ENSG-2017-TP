@@ -531,15 +531,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 // Création du point
                 Polygon poly = Polygon.unMarshall(geomStr);
-                PolygonOptions polyOption = new PolygonOptions();
-                polyOption.strokeColor(Color.GREEN)
-                        .fillColor(Color.YELLOW);
+                if(poly !=null) {
+                    PolygonOptions polyOption = new PolygonOptions();
+                    polyOption.strokeColor(Color.GREEN)
+                            .fillColor(Color.YELLOW);
 
-                for(XY coord : poly.getCoordinates().getCoords()){
-                    polyOption.add(new LatLng(coord.getY(),coord.getX()));
+                    for (XY coord : poly.getCoordinates().getCoords()) {
+                        polyOption.add(new LatLng(coord.getY(), coord.getX()));
+                    }
+
+                    mMap.addPolygon(polyOption);
                 }
-
-                mMap.addPolygon(polyOption);
 
             }
         } catch (Exception e) {
