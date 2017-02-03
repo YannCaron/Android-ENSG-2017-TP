@@ -1,0 +1,48 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsActivity">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="eu.ensg.forester.MapsActivity"/>
+
+    <TextView
+        android:layout_width="161dp"
+        android:layout_height="32dp"
+        android:id="@+id/coordinates"
+        android:text="GPS still not available !"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="right"
+        android:layout_margin="16dp"
+        android:alpha="0.75"
+        android:background="#ffffff"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:id="@+id/ls"
+        android:layout_gravity="bottom"
+        android:visibility="gone">
+
+        <Button
+            android:text="@string/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/save" />
+
+        <Button
+            android:text="@string/button_abort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/abort" />
+    </LinearLayout>
+
+</FrameLayout>
