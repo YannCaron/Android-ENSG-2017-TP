@@ -10,6 +10,11 @@ import android.widget.EditText;
 
 import java.io.IOException;
 
+import eu.ensg.forester.data.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+import jsqlite.Exception;
+
 public class CreateUserActivity extends AppCompatActivity implements Constants {
 
     // les vues
@@ -17,6 +22,9 @@ public class CreateUserActivity extends AppCompatActivity implements Constants {
     private EditText editLastName;
     private EditText editSerial;
     private Button buttonCreate;
+
+    // la database
+    private SpatialiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +51,32 @@ public class CreateUserActivity extends AppCompatActivity implements Constants {
     }
 
     private void create_onClick(View view) {
+        try{
+            database.exec("INSERT INTO Forester (firstName, lastName, serial) " +
+                    "VALUES ("+
+                    DatabaseUtils.sqlEscapeString(editFirstName.getText().toString())+ ", "+
+                    DatabaseUtils.sqlEscapeString(editLastName.getText().toString())+ ", "+
+                    DatabaseUtils.sqlEscapeString(editSerial.getText().toString())+ ")");
+            //renvoie sur l'activité Login
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra(EXTRA_SERIAL, editSerial.getText().toString());
+            startActivity(intent);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
 
     private void initDatabase() {
+        SpatialiteOpenHelper helper = null;
+        try{
+            helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
 
+        } catch (Exception | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

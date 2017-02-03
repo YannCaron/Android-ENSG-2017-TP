@@ -14,4 +14,8 @@
     <string name="addsector">Add sector</string>
     <string name="save">Save</string>
     <string name="abort">Abort</string>
+
+    <string name="usernotfind">USER NOT FOUND, PLEASE CREATE IT</string>
+    <string name="initdb">Database initialised</string>
+    <string name="errordb">Error Database</string>
 </resources>
