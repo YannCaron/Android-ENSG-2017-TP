@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
@@ -37,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -46,8 +48,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import dbAcces.ForesterSpatialiteOpenHelper;
+import eu.ensg.commons.io.FileSystem;
 import eu.ensg.commons.io.WebServices;
 import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
 import eu.ensg.spatialite.geom.BadGeometryException;
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
@@ -76,6 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     // db
     private SpatialiteDatabase database;
+    private SpatialiteOpenHelper helper;
 
     // ID de l'utilisateur
     private Integer foresterID;
@@ -148,6 +153,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case (R.id.itemSt):
                 menuSc(item);
                 return true;
+            case (R.id.itemSaveBd):
+                menuSaveDb(item);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -162,6 +170,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void menuSc(MenuItem item) {
         popToast("Create sector", true);
         createSt();
+    }
+
+    private void menuSaveDb(MenuItem item){
+        // TODO : save the database on antoher db or copy the file on an other part of the storage
+        popToast("Database ", true);
     }
 
 
@@ -421,7 +434,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      */
     private void initDatabase() {
         try {
-            database = new ForesterSpatialiteOpenHelper(this).getDatabase();
+            helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
         } catch (jsqlite.Exception | IOException e) {
             e.printStackTrace();
         }
