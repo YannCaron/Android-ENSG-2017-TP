@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left|bottom"
         android:background="@color/white"
-        android:gravity="bottom|center_horizontal"
         android:orientation="horizontal"
         android:alpha="0.7">
 
@@ -39,6 +38,35 @@
             android:id = "@+id/btAbort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id = "@+id/meteodsiplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:alpha="0.7">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tempTxt" >
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hmdTxt" >
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cloudTxt" >
+        </TextView>
 
     </LinearLayout>
 

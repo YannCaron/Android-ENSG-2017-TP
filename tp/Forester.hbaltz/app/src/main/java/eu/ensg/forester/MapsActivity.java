@@ -80,6 +80,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     // ID de l'utilisateur
     private Integer foresterID;
 
+    // Affichage
+    private TextView tempTxt;
+    private TextView humTxt;
+    private TextView cloudTxt;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +165,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Criteria criteria = new Criteria();
         String provider = locMgr.getBestProvider(criteria, false);
 
+        // Initialisation de la location:
+        currentLocation = new Location(provider);
+        currentLocation.setLatitude(48);
+        currentLocation.setLongitude(2);
+
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -189,6 +200,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Affiche les poi et le secteurs déjà présents dans la base de données et entré par l'utilisateur
         recoverPoiInDb();
         recoverSecInDb();
+
+        // Affiche la météo
+        displayMeteo();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -520,9 +534,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * @param poi le point d'interêt
      */
     private void geocodePoi(Point poi){
-        String res = null;
         final Point pt = poi;
-
 
         new AsyncTask<Location, Void, String>() {
             ProgressDialog dialog;
@@ -566,15 +578,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     // on parse le ficheir et on récupère la valeur qui nous intéresse
                     JSONObject json = new JSONObject(res);
                     JSONArray results = json.getJSONArray("results");
-                    res = ((JSONObject) results.get(0)).getString("formatted_address");
+                    String adresse = ((JSONObject) results.get(0)).getString("formatted_address");
 
                     // On ajoute le point à la carte
                     mMap.addMarker(new MarkerOptions().position(pt.toLatLng())
                             .title("Point of interest")
-                            .snippet(res));
+                            .snippet(adresse));
 
                     // on sauvegarde le point dans la bdd
-                    savePoiInDb("Poi",res,pt);
+                    savePoiInDb("Poi",adresse,pt);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -582,6 +594,51 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, currentLocation);
+    }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void displayMeteo(){
+        new AsyncTask<Location, Void, String>() {
+            @Override
+            protected String doInBackground(Location... params) {
+
+                String urlDef = "http://api.geonames.org/findNearByWeatherJSON?lat="+
+                        currentLocation.getLatitude()+"&lng="+currentLocation.getLongitude()+
+                        "&username=cyann";
+
+                URL url = null;
+                try {
+                    url = new URL(urlDef);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                    return WebServices.convertStreamToString(in);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String res) {
+                try {
+                    // on parse le ficheir et on récupère la valeur qui nous intéresse
+                    JSONObject json = new JSONObject(res);
+                    JSONObject meteoObs = new JSONObject(json.getString("weatherObservation"));
+
+                    String clouds = meteoObs.getString("clouds");
+                    String temperature = meteoObs.getString("temperature");
+                    String humidity = meteoObs.getString("humidity");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, currentLocation);
     }
 }
