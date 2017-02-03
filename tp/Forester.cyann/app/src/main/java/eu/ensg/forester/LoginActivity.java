@@ -6,12 +6,19 @@ import android.content.SharedPreferences;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+
+import eu.ensg.forester.data.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+import jsqlite.Exception;
+import jsqlite.Stmt;
 
 
 public class LoginActivity extends AppCompatActivity implements Constants {
@@ -20,6 +27,8 @@ public class LoginActivity extends AppCompatActivity implements Constants {
     private EditText editSerial;
     private Button buttonLogin;
     private Button buttonCreate;
+
+    private SpatialiteDatabase database;
 
     // les préférences
     private SharedPreferences preferences;
@@ -67,8 +76,37 @@ public class LoginActivity extends AppCompatActivity implements Constants {
     }
 
     private void login_onClick(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
+        Stmt stmt = null;
+        try  {
+            int serial = Integer.valueOf(editSerial.getText().toString());
+             stmt = database.prepare("SELECT id FROM Forester where Serial = " + serial);
+
+            if (stmt.step()) {
+                int foresterId = stmt.column_int(0);
+
+                Log.w(this.getClass().getName(), "ForesterID = " + foresterId);
+
+                Intent intent = new Intent(this, MapsActivity.class);
+                intent.putExtra(EXTRA_FORESTER_ID, foresterId);
+                startActivity(intent);
+                return;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        Toast.makeText(this, R.string.user_does_not_exists, Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(this, CreateUserActivity.class);
         startActivity(intent);
+
     }
 
     private void create_onClick(View view) {
@@ -77,7 +115,13 @@ public class LoginActivity extends AppCompatActivity implements Constants {
     }
 
     private void initDatabase() {
+        SpatialiteOpenHelper helper = null;
+        try {
+            helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
 
-
+        } catch (Exception | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

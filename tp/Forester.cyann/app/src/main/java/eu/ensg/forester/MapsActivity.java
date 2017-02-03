@@ -2,6 +2,7 @@ package eu.ensg.forester;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.DatabaseUtils;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,11 +28,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.io.IOException;
+
+import eu.ensg.forester.data.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+import eu.ensg.spatialite.geom.BadGeometryException;
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
+import jsqlite.Exception;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, Constants {
 
     private GoogleMap mMap;
 
@@ -44,6 +52,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private com.google.android.gms.maps.model.Polygon currentDrawnPolygon;
 
     private boolean isRecording = false;
+    private int foresterId;
+
+    private SpatialiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +64,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        foresterId = getIntent().getIntExtra(EXTRA_FORESTER_ID, -1);
 
         position = (TextView)findViewById(R.id.position);
         recordLayout = (ViewGroup)findViewById(R.id.record_layout);
@@ -73,8 +86,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        initDatabase();
     }
 
+    private void initDatabase() {
+        SpatialiteOpenHelper helper = null;
+        try {
+            helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
+
+        } catch (Exception | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Manipulates the map once available.
@@ -189,11 +213,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void onOptionAddPOISelected(MenuItem item) {
 
-        if (currentPoint != null)
+        if (currentPoint != null) {
             mMap.addMarker(new MarkerOptions().position(
                     currentPoint.toLatLng()).title("Point of interest")
                     .snippet(currentPoint.toString()));
-        else
+
+            try {
+
+                database.exec("" +
+                        "INSERT INTO PointOfInterest " +
+                        "(foresterID, name, description, position) " +
+                        "VALUES " +
+                        "(" + foresterId + ", " +
+                        DatabaseUtils.sqlEscapeString("Point of interest") + ", " +
+                        DatabaseUtils.sqlEscapeString(currentPoint.toString()) + ", " +
+                        currentPoint.toSpatialiteQuery(4326) + ")");
+
+            } catch (jsqlite.Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Sql Error !!!!", Toast.LENGTH_LONG).show();
+            } catch (BadGeometryException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Polygon marshalling Error !!!!", Toast.LENGTH_LONG).show();
+            }
+
+        } else
             Toast.makeText(this, "Not available !", Toast.LENGTH_LONG).show();
 
     }
