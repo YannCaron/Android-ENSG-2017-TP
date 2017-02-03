@@ -234,7 +234,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Toast.makeText(this, "Sql Error !!!!", Toast.LENGTH_LONG).show();
             } catch (BadGeometryException e) {
                 e.printStackTrace();
-                Toast.makeText(this, "Polygon marshalling Error !!!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Point marshalling Error !!!!", Toast.LENGTH_LONG).show();
             }
 
         } else
@@ -251,7 +251,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void onSaveRecordClicked(View view) {
         recordLayout.setVisibility(View.GONE);
 
-        // TODO Gerer la db
+        try {
+
+            database.exec("" +
+                    "INSERT INTO Sector " +
+                    "(foresterID, name, description, area) " +
+                    "VALUES " +
+                    "(" + foresterId + ", " +
+                    DatabaseUtils.sqlEscapeString("Sector") + ", " +
+                    DatabaseUtils.sqlEscapeString(currentSector.toString()) + ", " +
+                    currentSector.toSpatialiteQuery(4326) + ")");
+
+        } catch (jsqlite.Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sql Error !!!!", Toast.LENGTH_LONG).show();
+        } catch (BadGeometryException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Polygon marshalling Error !!!!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void onAbortRecordClicked(View view) {
