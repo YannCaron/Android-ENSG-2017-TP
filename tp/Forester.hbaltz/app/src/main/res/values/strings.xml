@@ -19,6 +19,7 @@
 
     <string name="sv">Save</string>
     <string name="abrt">Abort</string>
+    <string name="savecDb">Save th db</string>
 
     <string name="tmp">Température : </string>
     <string name="cld">Nuages : </string>

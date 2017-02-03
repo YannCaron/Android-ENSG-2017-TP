@@ -133,28 +133,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-
-        MenuItem item1 = menu.findItem(R.id.itemPt);
-        item1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                popToast("Point", true);
-                createPt();
-                return true;
-            }
-        });
-        MenuItem item2 = menu.findItem(R.id.itemSt);
-        item2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                popToast("Sector", true);
-                createSt();
-                return true;
-            }
-        });
-
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case (R.id.itemPt):
+                menuPt(item);
+                return true;
+            case (R.id.itemSt):
+                menuSc(item);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void menuPt(MenuItem item) {
+        popToast("Create point", true);
+        createPt();
+    }
+
+    private void menuSc(MenuItem item) {
+        popToast("Create sector", true);
+        createSt();
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
