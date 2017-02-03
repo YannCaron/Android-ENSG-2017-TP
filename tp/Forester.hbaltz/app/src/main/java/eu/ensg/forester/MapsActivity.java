@@ -1,5 +1,6 @@
 package eu.ensg.forester;
 
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -30,10 +32,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import dbAcces.ForesterSpatialiteOpenHelper;
+import eu.ensg.commons.io.WebServices;
 import eu.ensg.spatialite.SpatialiteDatabase;
 import eu.ensg.spatialite.geom.BadGeometryException;
 import eu.ensg.spatialite.geom.Point;
@@ -49,6 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
 
     // Gestion de la position
+    private Location currentLocation;
     private Point pos;
     private TextView lblPosition;
     private LocationManager locMgr;
@@ -152,6 +166,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Location location = locMgr.getLastKnownLocation(provider);
 
         if (location != null) {
+            currentLocation = location;
             float lat = (float) (location.getLatitude());
             float lng = (float) (location.getLongitude());
             Log.d("loc", "lat : " + pos.getCoordinate().getY() + ", long : " + pos.getCoordinate().getX());
@@ -184,6 +199,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     class GpsListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {
+            currentLocation = location;
             pos = new Point(location.getLongitude(),location.getLatitude());
 
             updateCam();
@@ -291,9 +307,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         public void onMapClick(LatLng latLng) {
             Point poiTmp = new Point(latLng.longitude,latLng.latitude);
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Point of interest").snippet("POINT (" + latLng.latitude + ", " + latLng.longitude + " )"));
 
-            savePoiInDb("Poi","A poi",poiTmp);
+            // Geocodes the point, when it's done save the poi in the database
+            geocodePoi(poiTmp);
         }
     }
 
@@ -348,7 +364,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Start the listener for the location
+     * Starts the listener for the location
      */
     private void startListenerLoc(){
         // Define which provider the application will use regarding which one is available
@@ -437,12 +453,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Recovers ant displays on the map the pois on the db
+     */
     private void recoverPoiInDb(){
         // Prépare la requête de récupération
         try {
             Stmt stmt = database.prepare("SELECT Name, Description, ST_asText(position) FROM PointOfInterest WHERE ForesterID = " + foresterID);
 
             while(stmt.step()){
+                // récupération des informations utiles
                 String name = stmt.column_string(0);
                 String comment = stmt.column_string(1);
                 String coordStr = stmt.column_string(2);
@@ -463,6 +483,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Recovers ant displays on the map the sectors on the db
+     */
     private void recoverSecInDb(){
         // Prépare la requête de récupération
         try {
@@ -488,5 +511,77 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Geocode le poi, l'affcihe sur la carte et l'ajoute à la bdd
+     * @param poi le point d'interêt
+     */
+    private void geocodePoi(Point poi){
+        String res = null;
+        final Point pt = poi;
+
+
+        new AsyncTask<Location, Void, String>() {
+            ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute(){
+                // UI thread
+                dialog = ProgressDialog.show(MapsActivity.this,
+                        "Geocodage", "Geocodage en cours veuillez patienter", true, true);
+            }
+
+            @Override
+            protected String doInBackground(Location... params) {
+
+                String urlDef = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+
+                        pt.getCoordinate().getY()+","+pt.getCoordinate().getX()+"&key="+
+                        getResources().getString(R.string.google_geocoding_key);
+
+                URL url = null;
+                try {
+                    url = new URL(urlDef);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                    return WebServices.convertStreamToString(in);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String res) {
+                // UI thread
+                dialog.dismiss();
+
+                try {
+                    // on parse le ficheir et on récupère la valeur qui nous intéresse
+                    JSONObject json = new JSONObject(res);
+                    JSONArray results = json.getJSONArray("results");
+                    res = ((JSONObject) results.get(0)).getString("formatted_address");
+
+                    // On ajoute le point à la carte
+                    mMap.addMarker(new MarkerOptions().position(pt.toLatLng())
+                            .title("Point of interest")
+                            .snippet(res));
+
+                    // on sauvegarde le point dans la bdd
+                    savePoiInDb("Poi",res,pt);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, currentLocation);
+
     }
 }
