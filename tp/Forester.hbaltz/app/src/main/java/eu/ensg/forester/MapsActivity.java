@@ -530,7 +530,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     polyOption.add(new LatLng(coord.getY(),coord.getX()));
                 }
 
-                mMap.addPolygon(polyOptions);
+                mMap.addPolygon(polyOption);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
