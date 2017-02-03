@@ -52,7 +52,7 @@ public class CreateUserActivity extends AppCompatActivity implements Constants {
     private void create_onClick(View view) {
         try {
             database.exec(
-                    "INSERT TO Forester (Firstname, Lastname, Serial "
+                    "INSERT INTO Forester (Firstname, Lastname, Serial) "
                     + "VALUES (" + DatabaseUtils.sqlEscapeString(editFirstName.getText().toString())
                     + ","
                     + DatabaseUtils.sqlEscapeString(editLastName.getText().toString())

@@ -47,7 +47,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private PolygonOptions draw = null;
     private LinearLayout mainlayout;
 
-    private Integer forester_id = getIntent().getIntExtra(EXTRA_FORESTER_ID, -1);
+    private Integer forester_id;
     private SpatialiteDatabase database;
     private boolean permission = false;
     private Integer nb_pointsector = 0;
@@ -59,6 +59,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        forester_id = getIntent().getIntExtra(EXTRA_FORESTER_ID, -1);
         // database
         initDatabase();
     }
@@ -195,7 +196,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             label.setText(String.format("%s", currentPoint.toString()));
             try {
                 database.exec(
-                        "INSERT INTO PointOfInterest (ForesterID, Name, Description, position "
+                        "INSERT INTO PointOfInterest (ForesterID, Name, Description, position) "
                         + "VALUES ("
                         + forester_id
                         + ","
@@ -251,7 +252,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (nb_pointsector > 3){
             try {
                 database.exec(
-                        "INSERT INTO District (ForesterID, Name, Description, Area "
+                        "INSERT INTO District (ForesterID, Name, Description, Area) "
                                 + "VALUES ("
                                 + forester_id
                                 + ","

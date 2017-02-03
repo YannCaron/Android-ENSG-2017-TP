@@ -241,7 +241,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="4209b839c08aea7a0a7323ccf76b6d2a46861652">
+        sha1="80c3529fb050707a864312a669b62c94be849ab2">
         <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_e37b3b68cff7a227b9daa680c5c6633a78e65a8a/classes.dex" />
     </item>
     <item
@@ -349,7 +349,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="c5c3cf385b973b2db2c4f2c1a4b40ff747fb5704">
+        sha1="28e6c95ff5bc75f982e3759d24ee89868af792fc">
         <dex dex="/home/prof/Documents/github/Android-ENSG-2017-TP/tp/Forester.Millet/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_c222a95de0fcf67a65e9fad57eae00530e2b5811/classes.dex" />
     </item>
     <item

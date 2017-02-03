@@ -16,28 +16,28 @@ public class ForesterSpatialiteOpenHelper extends SpatialiteOpenHelper {
 
     public static final String CREATE_FORESTER = "" +
             "CREATE TABLE Forester (" +
-            "Id Integer PRIMARY KEY AUTOINCREMENT," +
-            "FirstName String NOT NULL," +
-            "LastName String NOT NULL," +
+            "Id Integer PRIMARY KEY AUTOINCREMENT, " +
+            "FirstName String NOT NULL, " +
+            "LastName String NOT NULL, " +
             "Serial String NOT NULL" +
             ");";
 
     public static final String CREATE_POI = "" +
             "CREATE TABLE PointOfInterest (" +
-            "ID Integer PRIMARY KEY AUTOINCREMENT," +
-            "ForesterID Integer NOT NULL," +
-            "Name String NOT NULL," +
-            "Description String," +
-            "CONSTRAINT FK_poi_forester" + "FOREIGN KEY (foresterID)" + "REFERENCES forester (id)" +
+            "ID Integer PRIMARY KEY AUTOINCREMENT, " +
+            "ForesterID Integer NOT NULL, " +
+            "Name String NOT NULL, " +
+            "Description String, " +
+            "CONSTRAINT FK_poi_forester FOREIGN KEY (foresterID) REFERENCES forester (id)" +
             ");";
 
     public static final String CREATE_DISTRICT = "" +
             "CREATE TABLE District (" +
-            "ID Integer PRIMARY KEY AUTOINCREMENT," +
-            "ForesterID Integer NOT NULL," +
-            "Name String NOT NULL," +
-            "Description String," +
-            "Area Polygon" +
+            "ID Integer PRIMARY KEY AUTOINCREMENT, " +
+            "ForesterID Integer NOT NULL, " +
+            "Name String NOT NULL, " +
+            "Description String, " +
+            "CONSTRAINT FK_poi_forester FOREIGN KEY (foresterID) REFERENCES forester (id)" +
             ");";
 
     public static final String ADD_POI = "" +
