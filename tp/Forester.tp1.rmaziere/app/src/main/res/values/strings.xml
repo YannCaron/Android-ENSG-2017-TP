@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Forester</string>
+    <string name="label_serial_number">Serial Number</string>
+    <string name="button_login">Login</string>
+    <string name="button_create_new">Create new User</string>
+    <string name="label_first_name">First Name</string>
+    <string name="label_last_name">Last Name</string>
+
+    <string name="button_save">Save</string>
+    <string name="button_abort">Abort</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="providerNotAvailable">Provider not available</string>
+    <string name="dataSaved">Data saved</string>
+    <string name="databaseInitialiastionError">Cannot initialize database !</string>
+    <string name="welcome">Welcome</string>
+</resources>
