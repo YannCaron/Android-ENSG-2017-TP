@@ -63,6 +63,12 @@ public class CreateUserActivity extends AppCompatActivity implements Constants {
                                 DatabaseUtils.sqlEscapeString(lstName) + ", " +
                                 DatabaseUtils.sqlEscapeString(serialNB) +
                             ");");
+
+                // On lance l'activité login
+                Intent i = new Intent(this, LoginActivity.class);
+                i.putExtra(EXTRA_SERIAL, serialNB); // Voir Constants.java
+                startActivity(i);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -70,6 +76,9 @@ public class CreateUserActivity extends AppCompatActivity implements Constants {
 
     }
 
+    /**
+     * Initializes the connection to the database
+     */
     private void initDatabase() {
         try {
             database = new ForesterSpatialiteOpenHelper(this).getDatabase();

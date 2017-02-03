@@ -1,6 +1,7 @@
 package eu.ensg.forester;
 
 import android.content.pm.PackageManager;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
@@ -29,9 +30,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.io.IOException;
+
+import dbAcces.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.geom.BadGeometryException;
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
+import jsqlite.Exception;
+
+import static eu.ensg.forester.Constants.EXTRA_FORESTER_ID;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -49,6 +58,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LinearLayout llRecording;
     private PolygonOptions polyOptions;
 
+    // db
+    private SpatialiteDatabase database;
+
+    // ID de l'utilisateur
+    private Integer foresterID;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +78,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         locMgr = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         gpsListener = new GpsListener();
 
+        // Gérer les vues
         manageViews();
+
+        // Gére l'intent
+        // Gére si l'extra a été passé en paramètre
+        foresterID = getIntent().getIntExtra(EXTRA_FORESTER_ID,0);
+
+        Log.i("foresterID", ""+foresterID);
+
+        // Connection à la base de données
+        initDatabase();
     }
 
     @Override
@@ -136,9 +161,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.d("Provider", "Provider not available");
         }
 
+        // Lance les listeners sur la location
         startListenerLoc();
 
-        // Add a marker in Sydney and move the camera
+        // Initialise la caméra
         LatLng paris = new LatLng(48, 2);
         //mMap.addMarker(new MarkerOptions().position(paris).title("Marker in Paris").snippet("Ici c'est Paris !"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(paris));
@@ -258,7 +284,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private class MapClickListenerPt implements GoogleMap.OnMapClickListener {
         @Override
         public void onMapClick(LatLng latLng) {
+            Point poiTmp = new Point(latLng.longitude,latLng.latitude);
             mMap.addMarker(new MarkerOptions().position(latLng).title("Point of interest").snippet("POINT (" + latLng.latitude + ", " + latLng.longitude + " )"));
+
+            savePoiInDb("Poi","A poi",poiTmp);
         }
     }
 
@@ -281,6 +310,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void onClick(View v) {
             mMap.clear();
             popToast("Save", true);
+
+            saveSecInDb("Sector","A sector",currentDistrict);
+
             activateRecording(false);
         }
     }
@@ -309,6 +341,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Start the listener for the location
+     */
     private void startListenerLoc(){
         // Define which provider the application will use regarding which one is available
         if (locMgr.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -318,6 +353,79 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             locMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, gpsListener);
         } else {
             locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsListener);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Initializes the connection to the database
+     */
+    private void initDatabase() {
+        try {
+            database = new ForesterSpatialiteOpenHelper(this).getDatabase();
+        } catch (jsqlite.Exception | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * saves a poi in the database
+     * @param name poi's name
+     * @param description poi's description
+     * @param poi poi's geometry
+     */
+    private void savePoiInDb(String name, String description, Point poi){
+        String sqPoi = null;
+
+        try {
+            sqPoi = poi.toSpatialiteQuery(4326);
+        } catch (BadGeometryException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            database.exec("INSERT INTO PointOfInterest (Name, ForesterID, Description, position) " +
+                    "VALUES ("+
+                    DatabaseUtils.sqlEscapeString(name) + ", " +
+                    foresterID + ", " +
+                    DatabaseUtils.sqlEscapeString(description)+ ", " +
+                    sqPoi +
+                    ");");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * saves a sector in the database
+     * @param name sector's name
+     * @param description sector's description
+     * @param sector sector's geometry
+     */
+    private void saveSecInDb(String name, String description, Polygon sector){
+        String sqSec = null;
+
+        try {
+            sqSec = sector.toSpatialiteQuery(4326);
+        } catch (BadGeometryException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            database.exec("INSERT INTO PointOfInterest (Name, ForesterID, Description, position) " +
+                    "VALUES ("+
+                    DatabaseUtils.sqlEscapeString(name) + ", " +
+                    foresterID + ", " +
+                    DatabaseUtils.sqlEscapeString(description)+ ", " +
+                    sqSec +
+                    ");");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

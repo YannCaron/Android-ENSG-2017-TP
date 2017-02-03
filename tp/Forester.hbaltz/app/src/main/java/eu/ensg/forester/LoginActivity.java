@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,10 +83,17 @@ public class LoginActivity extends AppCompatActivity implements Constants {
         // https://www.gaia-gis.it/fossil/libspatialite/wiki?name=spatialite-android-tutorial
 
         try {
+            // Prépare la requête de récupération
             Stmt stmt = database.prepare("SELECT * FROM Forester WHERE Serial = " + DatabaseUtils.sqlEscapeString(serialNB));
 
             if(stmt.step()){
+                // Récupération de l'id de l'utilisateur
+                int foresterID = stmt.column_int(0);
+                Log.i("foresterID","" + foresterID);
+
+                // On lance l'activité gérant la carte en lui passant l'ID de l'utilisateur
                 Intent intent = new Intent(this, MapsActivity.class);
+                intent.putExtra(EXTRA_FORESTER_ID,foresterID);
                 startActivity(intent);
             }else {
                 popToast("Pas d'utilisateur ! Veuillez en créer un !", true);
