@@ -41,7 +41,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id = "@+id/meteodsiplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,21 +53,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tempTxt" >
+            android:id="@+id/tempTxt">
         </TextView>
 
         <TextView
+            android:layout_below="@id/tempTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/hmdTxt" >
+            android:id="@+id/hmdTxt">
         </TextView>
 
         <TextView
+            android:layout_below="@id/hmdTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cloudTxt" >
+            android:id="@+id/cloudTxt">
         </TextView>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

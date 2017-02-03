@@ -20,4 +20,8 @@
     <string name="sv">Save</string>
     <string name="abrt">Abort</string>
 
+    <string name="tmp">Température : </string>
+    <string name="cld">Nuages : </string>
+    <string name="hmd">Humidités :</string>
+
 </resources>

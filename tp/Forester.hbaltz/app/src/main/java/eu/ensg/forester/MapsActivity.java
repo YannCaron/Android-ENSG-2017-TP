@@ -216,7 +216,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             currentLocation = location;
             pos = new Point(location.getLongitude(),location.getLatitude());
 
+            // on met à jour la caméra
             updateCam();
+
+            // on met à jour la météo
+            displayMeteo();
         }
 
         @Override
@@ -256,6 +260,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btSave.setOnClickListener(new saveListener());
         btAbort.setOnClickListener(new AbortListener());
+
+        // Récupération des textview
+        tempTxt = (TextView) findViewById(R.id.tempTxt);
+        humTxt = (TextView) findViewById(R.id.hmdTxt);
+        cloudTxt = (TextView) findViewById(R.id.cloudTxt);
+
+        tempTxt.setText(getString(R.string.tmp));
+        humTxt.setText(getString(R.string.hmd));
+        cloudTxt.setText(getString(R.string.cld));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -633,6 +646,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     String clouds = meteoObs.getString("clouds");
                     String temperature = meteoObs.getString("temperature");
                     String humidity = meteoObs.getString("humidity");
+
+                    tempTxt.append(" " + temperature + "°C");
+                    humTxt.append(" " + humidity+ "%");
+                    cloudTxt.append(" " + clouds);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
