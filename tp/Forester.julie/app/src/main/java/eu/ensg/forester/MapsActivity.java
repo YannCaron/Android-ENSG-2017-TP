@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -26,9 +27,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.io.IOException;
+
+import eu.ensg.forester.data.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
+import jsqlite.Exception;
+import jsqlite.Stmt;
+
+import static eu.ensg.forester.Constants.EXTRA_FORESTER_ID;
+import static eu.ensg.forester.Constants.EXTRA_SERIAL;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener {
 
@@ -40,9 +51,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Button save;
     private Button abort;
 
-    private Polygon sector = new Polygon();;
+    private Polygon sector = null;;
     private boolean isRecording = false;
     private com.google.android.gms.maps.model.Polygon currentDrawPolygon;
+
+    // DB
+    private SpatialiteDatabase database;
+
+    // ID user
+    private Integer idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +88,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 abort_onClick(view);
             }
         });
+
+        //idUser = getIntent().getStringExtra(EXTRA_SERIAL);
+        idUser = getIntent().getIntExtra(EXTRA_FORESTER_ID, -1);
+
+        // database
+        initDatabase();
     }
 
 
@@ -86,6 +109,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        load_Point();
+        load_Sector();
 
         // Service
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -127,6 +153,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Ecoute tout changement de location
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1, this);
+
     }
 
     @Override
@@ -199,6 +226,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                             .title("Point of interest")
                                             .snippet(currentPosition.toString()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition.toLatLng()));
+            try {
+                database.exec("INSERT INTO PointOfInterest " +
+                        "(foresterID, name, description, position) " +
+                        "VALUES ('" + idUser + "', '" +
+                        "Interest" + "', '" +
+                        currentPosition.toString() + "', '" +
+                        currentPosition + "')");
+                Log.i(this.getClass().getName(), "Save");
+
+            } catch (jsqlite.Exception e) {
+                e.printStackTrace();
+            }
         }
         else
             Toast.makeText(this, "Not available",Toast.LENGTH_LONG).show();
@@ -213,6 +252,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void save_onClick(View view) {
+        try {
+            database.exec("INSERT INTO Sector " +
+                    "(foresterID, name, Area) " +
+                    "VALUES ('" + idUser + "', '" +
+                    "Sector" + "',' " +
+                    sector + "')");
+            Log.i(this.getClass().getName(), "Save");
+            sector = null;
+
+        } catch (jsqlite.Exception e) {
+            e.printStackTrace();
+        }
         isRecording = false;
         sectorMenu.setVisibility(view.GONE);
         //Log.i(this.getClass().getName(), sector.toString());
@@ -222,6 +273,68 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         isRecording = false;
         sectorMenu.setVisibility(view.GONE);
         //Log.i(this.getClass().getName(), sector.toString());
+    }
+
+    private void initDatabase() {
+        try {
+            SpatialiteOpenHelper helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
+        } catch (jsqlite.Exception | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void load_Point() {
+        Stmt stmt = null;
+        try {
+            stmt = database.prepare("SELECT name, description, position FROM PointOfInterest where foresterID="+ idUser);
+            while (stmt.step()) {
+                String name = stmt.column_string(0);
+                String description = stmt.column_string(1);
+                Point position = Point.unMarshall(stmt.column_string(2));
+
+                mMap.addMarker(new MarkerOptions().position(position.toLatLng())
+                        .title(name)
+                        .snippet(description));
+            }
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void load_Sector() {
+        Stmt stmt = null;
+        try {
+            stmt = database.prepare("SELECT name, description, Area FROM Sector where foresterID=\"+ idUser");
+            while (stmt.step()) {
+                String name = stmt.column_string(0);
+                String description = stmt.column_string(1);
+                Polygon poly = Polygon.unMarshall(stmt.column_string(2));
+                PolygonOptions polyOpt = new PolygonOptions();
+
+                for (XY xy : poly.getCoordinates().getCoords()) {
+                    polyOpt.add(new LatLng(xy.getY(), xy.getX()));
+                }
+                polyOpt.strokeColor(ContextCompat.getColor(this, R.color.color_stroke_polygon));
+                mMap.addPolygon(polyOpt);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
