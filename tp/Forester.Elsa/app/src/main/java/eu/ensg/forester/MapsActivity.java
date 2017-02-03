@@ -307,11 +307,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void markPOI(Point position){
-        mMap.addMarker(new MarkerOptions().position(currentPosition.toLatLng())
+        mMap.addMarker(new MarkerOptions().position(position.toLatLng())
                 .title("Point of interest")
                 .snippet(position.toString())
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition.toLatLng()));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(position.toLatLng()));
     }
 
     private void drawSector(Polygon sector){
