@@ -9,4 +9,5 @@
     <string name="button_save">Save</string>
     <string name="button_abort">Abort</string>
     <string name="title_activity_maps">Map</string>
+    <string name="user_does_not_exists">User does not exists! Create it first.</string>
 </resources>

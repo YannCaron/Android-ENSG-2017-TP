@@ -2,6 +2,7 @@ package eu.ensg.forester;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.DatabaseUtils;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,11 +28,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.io.IOException;
+
+import eu.ensg.forester.data.ForesterSpatialiteOpenHelper;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+import eu.ensg.spatialite.geom.BadGeometryException;
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
+import jsqlite.Exception;
+import jsqlite.Stmt;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, Constants {
 
     private GoogleMap mMap;
 
@@ -44,6 +53,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private com.google.android.gms.maps.model.Polygon currentDrawnPolygon;
 
     private boolean isRecording = false;
+    private int foresterId;
+
+    private SpatialiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +65,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        foresterId = getIntent().getIntExtra(EXTRA_FORESTER_ID, -1);
 
         position = (TextView)findViewById(R.id.position);
         recordLayout = (ViewGroup)findViewById(R.id.record_layout);
@@ -73,8 +87,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        initDatabase();
     }
 
+    private void initDatabase() {
+        SpatialiteOpenHelper helper = null;
+        try {
+            helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
+
+        } catch (Exception | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Manipulates the map once available.
@@ -118,8 +143,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             // Add a marker in Sydney and move the camera
             LatLng lastCoord = new LatLng(lat, lng);
-            mMap.addMarker(new MarkerOptions().position(lastCoord).title("Position initiale"));
+            //mMap.addMarker(new MarkerOptions().position(lastCoord).title("Position initiale"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(lastCoord));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
             Log.i(MapsActivity.class.getName(), String.valueOf(lat));
             Log.i(MapsActivity.class.getName(), String.valueOf(lng));
@@ -128,6 +154,46 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             position.setText("Provider not available");
         }
 
+        try {
+            Stmt stmt = database.prepare("SELECT name, description, ST_AsText(position) FROM PointOfInterest;");
+
+            while(stmt.step()) {
+                String name = stmt.column_string(0);
+                String description = stmt.column_string(1);
+                String position = stmt.column_string(2);
+                Point point = Point.unMarshall(position);
+
+                mMap.addMarker(new MarkerOptions().position(
+                        point.toLatLng()).title(name)
+                        .snippet(description));
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Stmt stmt = database.prepare("SELECT name, description, ST_AsText(area) FROM Sector");
+
+            while(stmt.step()) {
+                String name = stmt.column_string(0);
+                String description = stmt.column_string(1);
+                String area = stmt.column_string(2);
+                Polygon polygon = Polygon.unMarshall(area);
+
+                PolygonOptions poly = new PolygonOptions();
+                for (XY coord : polygon.getCoordinates().getCoords()) {
+                    poly.add(new LatLng(coord.getY(), coord.getX()));
+                }
+                poly.strokeColor(R.color.color_primary_dark);
+                mMap.addPolygon(poly);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -144,6 +210,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             for (XY coord : currentSector.getCoordinates().getCoords()) {
                 poly.add(new LatLng(coord.getY(), coord.getX()));
             }
+            poly.strokeColor(R.color.color_primary);
 
             if (currentDrawnPolygon != null) currentDrawnPolygon.remove();
             currentDrawnPolygon = mMap.addPolygon(poly);
@@ -189,11 +256,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void onOptionAddPOISelected(MenuItem item) {
 
-        if (currentPoint != null)
+        if (currentPoint != null) {
             mMap.addMarker(new MarkerOptions().position(
                     currentPoint.toLatLng()).title("Point of interest")
                     .snippet(currentPoint.toString()));
-        else
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPoint.toLatLng()));
+
+            try {
+
+                database.exec("" +
+                        "INSERT INTO PointOfInterest " +
+                        "(foresterID, name, description, position) " +
+                        "VALUES " +
+                        "(" + foresterId + ", " +
+                        DatabaseUtils.sqlEscapeString("Point of interest") + ", " +
+                        DatabaseUtils.sqlEscapeString(currentPoint.toString()) + ", " +
+                        currentPoint.toSpatialiteQuery(4326) + ")");
+
+            } catch (jsqlite.Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Sql Error !!!!", Toast.LENGTH_LONG).show();
+            } catch (BadGeometryException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Point marshalling Error !!!!", Toast.LENGTH_LONG).show();
+            }
+
+        } else
             Toast.makeText(this, "Not available !", Toast.LENGTH_LONG).show();
 
     }
@@ -205,13 +293,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void onSaveRecordClicked(View view) {
+        isRecording = false;
         recordLayout.setVisibility(View.GONE);
 
-        // TODO Gerer la db
+        try {
+
+            database.exec("" +
+                    "INSERT INTO Sector " +
+                    "(foresterID, name, description, area) " +
+                    "VALUES " +
+                    "(" + foresterId + ", " +
+                    DatabaseUtils.sqlEscapeString("Sector") + ", " +
+                    DatabaseUtils.sqlEscapeString(currentSector.toString()) + ", " +
+                    currentSector.toSpatialiteQuery(4326) + ")");
+
+            currentSector = null;
+
+        } catch (jsqlite.Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sql Error !!!!", Toast.LENGTH_LONG).show();
+        } catch (BadGeometryException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Polygon marshalling Error !!!!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void onAbortRecordClicked(View view) {
+        isRecording = false;
         recordLayout.setVisibility(View.GONE);
+        currentSector = null;
     }
 
 }
