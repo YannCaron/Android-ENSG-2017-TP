@@ -4,4 +4,6 @@
         android:title="@string/addPt" />
     <item android:id="@+id/itemSt"
         android:title="@string/addSt" />
+    <item android:id="@+id/itemSaveBd"
+        android:title="@string/savecDb" />
 </menu>

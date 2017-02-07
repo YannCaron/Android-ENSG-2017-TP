@@ -1,12 +1,16 @@
 package eu.ensg.forester;
 
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
@@ -29,15 +33,40 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Locale;
+
+import dbAcces.ForesterSpatialiteOpenHelper;
+import eu.ensg.commons.io.FileSystem;
+import eu.ensg.commons.io.WebServices;
+import eu.ensg.spatialite.SpatialiteDatabase;
+import eu.ensg.spatialite.SpatialiteOpenHelper;
+import eu.ensg.spatialite.geom.BadGeometryException;
 import eu.ensg.spatialite.geom.Point;
 import eu.ensg.spatialite.geom.Polygon;
 import eu.ensg.spatialite.geom.XY;
+import jsqlite.Exception;
+import jsqlite.Stmt;
+
+import static eu.ensg.forester.Constants.EXTRA_FORESTER_ID;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
     // Gestion de la position
+    private Location currentLocation;
     private Point pos;
     private TextView lblPosition;
     private LocationManager locMgr;
@@ -48,6 +77,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean isRecording;
     private LinearLayout llRecording;
     private PolygonOptions polyOptions;
+
+    // db
+    private SpatialiteDatabase database;
+    private SpatialiteOpenHelper helper;
+
+    // ID de l'utilisateur
+    private Integer foresterID;
+
+    // Affichage
+    private TextView tempTxt;
+    private TextView humTxt;
+    private TextView cloudTxt;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
@@ -63,7 +104,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         locMgr = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         gpsListener = new GpsListener();
 
+        // Gérer les vues
         manageViews();
+
+        // Gére l'intent
+        // Gére si l'extra a été passé en paramètre
+        foresterID = getIntent().getIntExtra(EXTRA_FORESTER_ID,0);
+
+        Log.i("foresterID", ""+foresterID);
+
+        // Connection à la base de données
+        initDatabase();
     }
 
     @Override
@@ -87,28 +138,45 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-
-        MenuItem item1 = menu.findItem(R.id.itemPt);
-        item1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                popToast("Point", true);
-                createPt();
-                return true;
-            }
-        });
-        MenuItem item2 = menu.findItem(R.id.itemSt);
-        item2.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                popToast("Sector", true);
-                createSt();
-                return true;
-            }
-        });
-
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case (R.id.itemPt):
+                menuPt(item);
+                return true;
+            case (R.id.itemSt):
+                menuSc(item);
+                return true;
+            case (R.id.itemSaveBd):
+                menuSaveDb(item);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void menuPt(MenuItem item) {
+        popToast("Create point", true);
+        createPt();
+    }
+
+    private void menuSc(MenuItem item) {
+        popToast("Create sector", true);
+        createSt();
+    }
+
+    private void menuSaveDb(MenuItem item){
+        // TODO : save the database on antoher db or copy the file on an other part of the storage
+        popToast("Database ", true);
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -119,12 +187,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Criteria criteria = new Criteria();
         String provider = locMgr.getBestProvider(criteria, false);
 
+        // Initialisation de la location:
+        currentLocation = new Location(provider);
+        currentLocation.setLatitude(48);
+        currentLocation.setLongitude(2);
+
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         Location location = locMgr.getLastKnownLocation(provider);
 
         if (location != null) {
+            currentLocation = location;
             float lat = (float) (location.getLatitude());
             float lng = (float) (location.getLongitude());
             Log.d("loc", "lat : " + pos.getCoordinate().getY() + ", long : " + pos.getCoordinate().getX());
@@ -136,12 +211,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.d("Provider", "Provider not available");
         }
 
+        // Lance les listeners sur la location
         startListenerLoc();
 
-        // Add a marker in Sydney and move the camera
+        // Initialise la caméra
         LatLng paris = new LatLng(48, 2);
         //mMap.addMarker(new MarkerOptions().position(paris).title("Marker in Paris").snippet("Ici c'est Paris !"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(paris));
+
+        // Affiche les poi et le secteurs déjà présents dans la base de données et entré par l'utilisateur
+        recoverPoiInDb();
+        recoverSecInDb();
+
+        // Affiche la météo
+        displayMeteo();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,9 +235,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     class GpsListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {
+            currentLocation = location;
             pos = new Point(location.getLongitude(),location.getLatitude());
 
+            // on met à jour la caméra
             updateCam();
+
+            // on met à jour la météo
+            displayMeteo();
         }
 
         @Override
@@ -194,6 +282,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         btSave.setOnClickListener(new saveListener());
         btAbort.setOnClickListener(new AbortListener());
+
+        // Récupération des textview
+        tempTxt = (TextView) findViewById(R.id.tempTxt);
+        humTxt = (TextView) findViewById(R.id.hmdTxt);
+        cloudTxt = (TextView) findViewById(R.id.cloudTxt);
+
+        tempTxt.setText(getString(R.string.tmp));
+        humTxt.setText(getString(R.string.hmd));
+        cloudTxt.setText(getString(R.string.cld));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -258,7 +355,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private class MapClickListenerPt implements GoogleMap.OnMapClickListener {
         @Override
         public void onMapClick(LatLng latLng) {
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Point of interest").snippet("POINT (" + latLng.latitude + ", " + latLng.longitude + " )"));
+            Point poiTmp = new Point(latLng.longitude,latLng.latitude);
+
+            // Geocodes the point, when it's done save the poi in the database
+            geocodePoi(poiTmp);
         }
     }
 
@@ -281,6 +381,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void onClick(View v) {
             mMap.clear();
             popToast("Save", true);
+
+            saveSecInDb("Sector","A sector",currentDistrict);
+
             activateRecording(false);
         }
     }
@@ -309,6 +412,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Starts the listener for the location
+     */
     private void startListenerLoc(){
         // Define which provider the application will use regarding which one is available
         if (locMgr.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -319,5 +425,260 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsListener);
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Initializes the connection to the database
+     */
+    private void initDatabase() {
+        try {
+            helper = new ForesterSpatialiteOpenHelper(this);
+            database = helper.getDatabase();
+        } catch (jsqlite.Exception | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * saves a poi in the database
+     * @param name poi's name
+     * @param description poi's description
+     * @param poi poi's geometry
+     */
+    private void savePoiInDb(String name, String description, Point poi){
+        String sqPoi = null;
+
+        try {
+            sqPoi = poi.toSpatialiteQuery(4326);
+        } catch (BadGeometryException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            database.exec("INSERT INTO PointOfInterest (Name, ForesterID, Description, position) " +
+                    "VALUES ("+
+                    DatabaseUtils.sqlEscapeString(name) + ", " +
+                    foresterID + ", " +
+                    DatabaseUtils.sqlEscapeString(description)+ ", " +
+                    sqPoi +
+                    ");");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * saves a sector in the database
+     * @param name sector's name
+     * @param description sector's description
+     * @param sector sector's geometry
+     */
+    private void saveSecInDb(String name, String description, Polygon sector){
+        String sqSec = null;
+
+        try {
+            sqSec = sector.toSpatialiteQuery(4326);
+        } catch (BadGeometryException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            database.exec("INSERT INTO Sector (Name, ForesterID, Description, position) " +
+                    "VALUES ("+
+                    DatabaseUtils.sqlEscapeString(name) + ", " +
+                    foresterID + ", " +
+                    DatabaseUtils.sqlEscapeString(description)+ ", " +
+                    sqSec +
+                    ");");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Recovers ant displays on the map the pois on the db
+     */
+    private void recoverPoiInDb(){
+        // Prépare la requête de récupération
+        try {
+            Stmt stmt = database.prepare("SELECT Name, Description, ST_asText(position) FROM PointOfInterest WHERE ForesterID = " + foresterID);
+
+            while(stmt.step()){
+                // récupération des informations utiles
+                String name = stmt.column_string(0);
+                String comment = stmt.column_string(1);
+                String coordStr = stmt.column_string(2);
+
+                // Création du point
+                Point coord = Point.unMarshall(coordStr);
+
+                // Ajoute les points à la carte
+                mMap.addMarker(new MarkerOptions().position(coord.toLatLng()).title(name).snippet(comment));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Recovers ant displays on the map the sectors on the db
+     */
+    private void recoverSecInDb(){
+        // Prépare la requête de récupération
+        try {
+            Stmt stmt = database.prepare("SELECT Name, Description, ST_asText(position) FROM Sector WHERE ForesterID = " + foresterID);
+
+            while(stmt.step()){
+                String name = stmt.column_string(0);
+                String comment = stmt.column_string(1);
+                String geomStr = stmt.column_string(2);
+
+                // Création du point
+                Polygon poly = Polygon.unMarshall(geomStr);
+                if(poly !=null) {
+                    PolygonOptions polyOption = new PolygonOptions();
+                    polyOption.strokeColor(Color.GREEN)
+                            .fillColor(Color.YELLOW);
+
+                    for (XY coord : poly.getCoordinates().getCoords()) {
+                        polyOption.add(new LatLng(coord.getY(), coord.getX()));
+                    }
+
+                    mMap.addPolygon(polyOption);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Geocode le poi, l'affcihe sur la carte et l'ajoute à la bdd
+     * @param poi le point d'interêt
+     */
+    private void geocodePoi(Point poi){
+        final Point pt = poi;
+
+        new AsyncTask<Location, Void, String>() {
+            ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute(){
+                // UI thread
+                dialog = ProgressDialog.show(MapsActivity.this,
+                        "Geocodage", "Geocodage en cours veuillez patienter", true, true);
+            }
+
+            @Override
+            protected String doInBackground(Location... params) {
+
+                String urlDef = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+
+                        pt.getCoordinate().getY()+","+pt.getCoordinate().getX()+"&key="+
+                        getResources().getString(R.string.google_geocoding_key);
+
+                URL url = null;
+                try {
+                    url = new URL(urlDef);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                    return WebServices.convertStreamToString(in);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String res) {
+                // UI thread
+                dialog.dismiss();
+
+                try {
+                    // on parse le ficheir et on récupère la valeur qui nous intéresse
+                    JSONObject json = new JSONObject(res);
+                    JSONArray results = json.getJSONArray("results");
+                    String adresse = ((JSONObject) results.get(0)).getString("formatted_address");
+
+                    // On ajoute le point à la carte
+                    mMap.addMarker(new MarkerOptions().position(pt.toLatLng())
+                            .title("Point of interest")
+                            .snippet(adresse));
+
+                    // on sauvegarde le point dans la bdd
+                    savePoiInDb("Poi",adresse,pt);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, currentLocation);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void displayMeteo(){
+        new AsyncTask<Location, Void, String>() {
+            @Override
+            protected String doInBackground(Location... params) {
+
+                String urlDef = "http://api.geonames.org/findNearByWeatherJSON?lat="+
+                        currentLocation.getLatitude()+"&lng="+currentLocation.getLongitude()+
+                        "&username=cyann";
+
+                URL url = null;
+                try {
+                    url = new URL(urlDef);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                    return WebServices.convertStreamToString(in);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String res) {
+                try {
+                    // on parse le ficheir et on récupère la valeur qui nous intéresse
+                    JSONObject json = new JSONObject(res);
+                    JSONObject meteoObs = new JSONObject(json.getString("weatherObservation"));
+
+                    String clouds = meteoObs.getString("clouds");
+                    String temperature = meteoObs.getString("temperature");
+                    String humidity = meteoObs.getString("humidity");
+
+                    tempTxt.setText(getString(R.string.tmp)+" " + temperature + "°C");
+                    humTxt.setText(getString(R.string.hmd)+" " + humidity+ "%");
+                    cloudTxt.setText(getString(R.string.cld)+" " + clouds);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, currentLocation);
     }
 }
