@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file:///host/Documents/Android-ENSG-2017-TP/tp/...iml" filepath="/host/Documents/Android-ENSG-2017-TP/tp/...iml" />
+      <module fileurl="file:///host/Documents/Android-ENSG-2017-TP/tp/Forester.maps/Forester.maps.iml" filepath="/host/Documents/Android-ENSG-2017-TP/tp/Forester.maps/Forester.maps.iml" />
+      <module fileurl="file:///host/Documents/Android-ENSG-2017-TP/tp/Forester.maps/app/app.iml" filepath="/host/Documents/Android-ENSG-2017-TP/tp/Forester.maps/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../eu.ensg.commons/eu.ensg.commons.iml" filepath="$PROJECT_DIR$/../eu.ensg.commons/eu.ensg.commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../eu.ensg.spatialite/eu.ensg.spatialite.iml" filepath="$PROJECT_DIR$/../eu.ensg.spatialite/eu.ensg.spatialite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spatialite-db-driver/spatialite-db-driver.iml" filepath="$PROJECT_DIR$/../spatialite-db-driver/spatialite-db-driver.iml" />
+    </modules>
+  </component>
+</project>

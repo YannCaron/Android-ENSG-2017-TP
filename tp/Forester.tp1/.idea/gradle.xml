@@ -8,12 +8,12 @@
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.14.1" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/.." />
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/../eu.ensg.commons" />
-            <option value="$PROJECT_DIR$/../eu.ensg.spatialite" />
-            <option value="$PROJECT_DIR$/../spatialite-db-driver" />
+            <option value="/host/Documents/Android-ENSG-2017-TP/tp" />
+            <option value="/host/Documents/Android-ENSG-2017-TP/tp/Forester.tp1" />
+            <option value="/host/Documents/Android-ENSG-2017-TP/tp/Forester.tp1/app" />
+            <option value="/host/Documents/Android-ENSG-2017-TP/tp/eu.ensg.commons" />
+            <option value="/host/Documents/Android-ENSG-2017-TP/tp/eu.ensg.spatialite" />
+            <option value="/host/Documents/Android-ENSG-2017-TP/tp/spatialite-db-driver" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

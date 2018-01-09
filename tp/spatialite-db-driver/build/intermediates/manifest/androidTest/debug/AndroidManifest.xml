@@ -13,7 +13,7 @@
         android:label="Tests for spatialite_database_driver.test"
         android:targetPackage="spatialite_database_driver.test" />
 
-    <application>
+    <application android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
     </application>
 
